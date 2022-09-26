@@ -24,6 +24,8 @@ public class MovementTwo : MonoBehaviour
     private bool jump;
     private bool canJump;
     private float speed2;
+    private float currentRotZ;
+    private float currentRotY;
     private bool gameOver;
 
     private float controllerHorizontal2;
@@ -43,21 +45,30 @@ public class MovementTwo : MonoBehaviour
 
         currentspeed2 = pl2.velocity.x;
         currentVertical2 = pl2.velocity.y;
+        currentRotY = (pl2.angularVelocity.y);
+        currentRotZ = (pl2.angularVelocity.z);
         gameOver = Manager.gameOver;
+
+
+
+        //death script
 
         if (isDed == true)
         {
 
-            if (Math.Abs(pl2t.transform.position.x) > 1)
+            if (Math.Abs(pl2t.transform.position.x) > .3f)
             {
-                pl2t.transform.position = new Vector3(pl2t.transform.position.x / 1.1f, 16f, 0f);
+                pl2.velocity = new Vector3(0, 0, 0);
+                pl2t.transform.position = new Vector3(pl2t.transform.position.x / 1.025f, -.01f * (pl2t.transform.position.x * pl2t.transform.position.x) + 16f, 0f);
                 //Debug.Log(PL2T.transform.position.x);
             }
 
-            if (Math.Abs(pl2t.transform.position.x) < 1)
+            if (Math.Abs(pl2t.transform.position.x) < .4f)
             {
-                pl2.AddForce(-currentspeed2, 0, 0, ForceMode.VelocityChange);
+                pl2.velocity = new Vector3(0, -50f, 0);
+                pl2t.transform.position = new Vector3(0f, 16f, 0f);
                 isDed = false;
+                
             }
         }
 
@@ -111,6 +122,7 @@ public class MovementTwo : MonoBehaviour
 
         if (Input.GetButtonDown("Joystick2-5") && jumps2 > 0)
         {
+            pl2.angularVelocity = new Vector3(0, currentRotY, -6);
             pl2.AddForce(-currentspeed2 + (setSpeed * 5f), (-currentVertical2 + (jumpheight2 * .75f)), 0, ForceMode.VelocityChange);
             speed2 = setSpeed * .25f;
             jumps2 = jumps2 - 1;
@@ -120,6 +132,7 @@ public class MovementTwo : MonoBehaviour
 
         if (Input.GetButtonDown("Joystick2-4") && jumps2 > 0)
         {
+            pl2.angularVelocity = new Vector3(0, currentRotY, 6);
             pl2.AddForce(-currentspeed2 + (-setSpeed * 5f), (-currentVertical2 + (jumpheight2 * .75f)), 0, ForceMode.VelocityChange);
             speed2 = setSpeed * .25f;
             jumps2 = jumps2 - 1;
@@ -129,12 +142,12 @@ public class MovementTwo : MonoBehaviour
 
         if (controllerHorizontal2 > .8f)
         {
-            pl2.angularVelocity = new Vector3(0, -10, 0);
+            pl2.angularVelocity = new Vector3(0, -10, currentRotZ);
         }
 
         if (controllerHorizontal2 < -.8f)
         {
-            pl2.angularVelocity = new Vector3(0, 10, 0);
+            pl2.angularVelocity = new Vector3(0, 10, currentRotZ);
         }
 
 
@@ -148,7 +161,7 @@ public class MovementTwo : MonoBehaviour
         //asks if the collision was with the stage
         if (collision.gameObject.tag == "Stage")
         {
-            
+
             //resets jumps, and sets players rotation back to upright
             // isGrounded = true; extra
             jumps2 = 2;
@@ -158,9 +171,13 @@ public class MovementTwo : MonoBehaviour
 
         if (collision.gameObject.tag == "BlastZone")
         {
-            jumps2 = 0;
-            pl2.AddForce(-currentspeed2, 0, 0, ForceMode.VelocityChange);
-           isDed = true;
+            if (isDed == false)
+            {
+                pl2.velocity = new Vector3(0, 0, 0);
+                jumps2 = 0;
+                pl2.AddForce(-currentspeed2, 0, -currentVertical2, ForceMode.VelocityChange);
+                isDed = true;
+            }
         }
     }
 

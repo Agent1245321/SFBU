@@ -74,8 +74,9 @@ public class Manager : MonoBehaviour
         }
 
 
-       // Debug.Log(score1);
+        // Debug.Log(score1);
         //Debug.Log(score2);
+        //Debug.Log(pl2Ded);
 
      
     }

@@ -13,7 +13,7 @@ public class Movemnt1 : MonoBehaviour
     public float jumpHeight;
     public float speedCap;
     public float friction;
-    public Transform PL1T;
+    public Transform pl1t;
     public static bool isDed = false;
 
 
@@ -28,7 +28,7 @@ public class Movemnt1 : MonoBehaviour
     private float controllerHorizontal2;
     private bool jump;
     private bool canJump;
-    private float currentRotX;
+    private float currentRotZ;
     private float currentRotY;
     private bool gameOver;
     
@@ -47,7 +47,7 @@ public class Movemnt1 : MonoBehaviour
         controllerVertical = Input.GetAxis("Vertical");
         controllerHorizontal2 = Input.GetAxis("Joystick1Horizontal2");
         currentRotY = (pl1.angularVelocity.y);
-        currentRotX = (pl1.angularVelocity.z);
+        currentRotZ = (pl1.angularVelocity.z);
 
         currentSpeed = pl1.velocity.x;
         currentVertical = pl1.velocity.y;
@@ -63,15 +63,17 @@ public class Movemnt1 : MonoBehaviour
             if (isDed == true)
         {
            
-            if (Math.Abs(PL1T.transform.position.x) > 1)
+            if (Math.Abs(pl1t.transform.position.x) > .3f)
             {
-                PL1T.transform.position = new Vector3(PL1T.transform.position.x / 1.1f, 16f, 0f);
+                pl1.velocity = new Vector3(0, 0, 0);
+                pl1t.transform.position = new Vector3(pl1t.transform.position.x / 1.025f, -.01f * (pl1t.transform.position.x * pl1t.transform.position.x) + 16f, 0f);
                 //Debug.Log(PL1T.transform.position.x);
             }
 
-            if (Math.Abs(PL1T.transform.position.x) < 1)
+            if (Math.Abs(pl1t.transform.position.x) < .4f)
             {
-                pl1.AddForce(-currentSpeed, 0, 0, ForceMode.VelocityChange);
+                pl1.velocity = new Vector3(0, -50f, 0);
+                pl1t.transform.position = new Vector3(0f, 16f, 0f);
                 isDed = false;
             }
         }
@@ -136,12 +138,12 @@ public class Movemnt1 : MonoBehaviour
         //Debug.Log(controllerHorizontal2);
         if (controllerHorizontal2 > .8f)
         {
-            pl1.angularVelocity = new Vector3(0, -10, currentRotX);
+            pl1.angularVelocity = new Vector3(0, -10, currentRotZ);
         }
 
         if (controllerHorizontal2 < -.8f)
         {
-            pl1.angularVelocity = new Vector3(0, 10, currentRotX);
+            pl1.angularVelocity = new Vector3(0, 10, currentRotZ);
         }
 
 
@@ -151,7 +153,7 @@ public class Movemnt1 : MonoBehaviour
     {
         if(collision.gameObject.tag == "Stage")
         {
-            // isGrounded = true;
+            isDed = false;
             speed = setSpeed;
             jumps = 2;
             pl1.rotation = Quaternion.Euler(0, 0, 0);
@@ -160,9 +162,13 @@ public class Movemnt1 : MonoBehaviour
 
         if(collision.gameObject.tag == "BlastZone")
         {
-            jumps = 0;
-            pl1.AddForce(-currentSpeed, 0, 0, ForceMode.VelocityChange);
-            isDed = true;
+            if (isDed == false)
+            {
+                pl1.velocity = new Vector3(0, 0, 0);
+                jumps = 0;
+                pl1.AddForce(-currentSpeed, -currentVertical, 0, ForceMode.VelocityChange);
+                isDed = true;
+            }
         }
     }
 

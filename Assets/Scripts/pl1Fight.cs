@@ -12,6 +12,8 @@ public class pl1Fight : MonoBehaviour
     public GameObject uppercutCol;
     public ParticleSystem uppercutParticals;
     public Rigidbody pl1RB;
+    private float horizontalInput;
+    private bool meterLock;
 
 
     private void Start()
@@ -25,9 +27,13 @@ public class pl1Fight : MonoBehaviour
         
         while (pl1Meter < 100)
         {
-            yield return new WaitForSeconds(.1f);
+            yield return new WaitForSeconds(.5f);
             pl1Meter += 5;
         }
+
+        meterLock = true;
+
+        yield return null;
 
         
     }
@@ -35,10 +41,26 @@ public class pl1Fight : MonoBehaviour
     [System.Obsolete]
     public void Update()
     {
-        Debug.Log(pl1Meter);
+       // Debug.Log(pl1Meter);
         if (Input.GetButtonDown("Joystick1-1"))
         {
             StartCoroutine(UpperCut());
+        }
+        if (pl1Meter < 100 && meterLock == true)
+        {
+            meterLock = false;
+            StartCoroutine(MeterBurn());
+        }
+
+        if(Input.GetAxis("Joystick1Horizontal2") > .8f)
+        {
+            horizontalInput = 1;
+        }
+
+        if (Input.GetAxis("Joystick1Horizontal2") < -0.8f)
+        {
+            horizontalInput = -1;
+
         }
     }
 
@@ -54,28 +76,28 @@ public class pl1Fight : MonoBehaviour
         {
             pl1Meter -= 25f;
             uppercutCol.SetActive(true);
-            upperCut.position = new Vector3(pl1.transform.position.x + .8f, pl1.transform.position.y - .75f, 0f);
+            upperCut.position = new Vector3(pl1.transform.position.x + horizontalInput * .8f, pl1.transform.position.y - .75f, 0f);
             yield return new WaitForSeconds(.02f);
             uppercutParticals.enableEmission = true;
 
-            upperCut.position = new Vector3(pl1.transform.position.x + 1f, pl1.transform.position.y - .5f, 0f);
+            upperCut.position = new Vector3(pl1.transform.position.x + horizontalInput * 1f, pl1.transform.position.y - .5f, 0f);
             yield return new WaitForSeconds(.02f);
 
-            upperCut.position = new Vector3(pl1.transform.position.x + 1.1f, pl1.transform.position.y - .25f, 0f);
+            upperCut.position = new Vector3(pl1.transform.position.x + horizontalInput * 1.1f, pl1.transform.position.y - .25f, 0f);
             yield return new WaitForSeconds(.02f);
 
 
 
-            upperCut.position = new Vector3(pl1.transform.position.x + 1.2f, pl1.transform.position.y, 0f);
+            upperCut.position = new Vector3(pl1.transform.position.x + horizontalInput * 1.2f, pl1.transform.position.y, 0f);
             yield return new WaitForSeconds(.02f);
 
-            upperCut.position = new Vector3(pl1.transform.position.x + 1.3f, pl1.transform.position.y + .25f, 0f);
+            upperCut.position = new Vector3(pl1.transform.position.x + horizontalInput * 1.3f, pl1.transform.position.y + .25f, 0f);
             yield return new WaitForSeconds(.02f);
 
-            upperCut.position = new Vector3(pl1.transform.position.x + 1.3f, pl1.transform.position.y + .5f, 0f);
+            upperCut.position = new Vector3(pl1.transform.position.x + horizontalInput * 1.3f, pl1.transform.position.y + .5f, 0f);
             yield return new WaitForSeconds(.02f);
 
-            upperCut.position = new Vector3(pl1.transform.position.x + 1.2f, pl1.transform.position.y + .75f, 0f);
+            upperCut.position = new Vector3(pl1.transform.position.x + horizontalInput * 1.2f, pl1.transform.position.y + .75f, 0f);
             yield return new WaitForSeconds(.02f);
             
             uppercutParticals.enableEmission = false;
