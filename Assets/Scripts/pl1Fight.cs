@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class pl1Fight : MonoBehaviour
 {
-    private float pl1Perc;
+    public static float pl1Perc;
     private float pl1Meter = 0;
-    private bool hitStun;
+    public static bool hitStun;
     public Transform upperCut;
     public Transform pl1;
     public GameObject uppercutCol;
@@ -14,10 +14,13 @@ public class pl1Fight : MonoBehaviour
     public Rigidbody pl1RB;
     private float horizontalInput;
     private bool meterLock;
-
+    public bool iFrames1;
+    public Material red;
+    public Material dred;
 
     private void Start()
     {
+     
         StartCoroutine(MeterBurn());
     }
 
@@ -41,8 +44,9 @@ public class pl1Fight : MonoBehaviour
     [System.Obsolete]
     public void Update()
     {
-       // Debug.Log(pl1Meter);
-        if (Input.GetButtonDown("Joystick1-1"))
+        // uppercut start
+
+        if (Input.GetButtonDown("Joystick1-1") && hitStun == false)
         {
             StartCoroutine(UpperCut());
         }
@@ -84,9 +88,7 @@ public class pl1Fight : MonoBehaviour
             yield return new WaitForSeconds(.02f);
 
             upperCut.position = new Vector3(pl1.transform.position.x + horizontalInput * 1.1f, pl1.transform.position.y - .25f, 0f);
-            yield return new WaitForSeconds(.02f);
-
-
+            yield return new WaitForSeconds(.02f);          
 
             upperCut.position = new Vector3(pl1.transform.position.x + horizontalInput * 1.2f, pl1.transform.position.y, 0f);
             yield return new WaitForSeconds(.02f);
@@ -109,12 +111,26 @@ public class pl1Fight : MonoBehaviour
     }
     public void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.name == "Sphere")
+        if (collision.gameObject.name == "Sphere" && hitStun == false)
         {
-            pl1RB.AddForce(100f * pl1Perc / 500f, 100f * pl1Perc / 100f, 0);
-            pl1Perc += 20f;
+            StartCoroutine(HitStun());
+            //pl1RB.AddForce(pl1Perc / 5f, pl1Perc, 0);
+            pl1Perc += 800f;
 
         }
+    }
+
+
+
+    IEnumerator HitStun()
+    {
+        hitStun = true;
+        red.color = Color.black;
+        yield return new WaitForSeconds(Mathf.Pow(pl1Perc, 1.2f) / 10000f);
+        hitStun = false;
+        red.color = Color.red;
+
+        yield return null;
     }
 
 }

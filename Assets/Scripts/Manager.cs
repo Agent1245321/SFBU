@@ -8,6 +8,9 @@ public class Manager : MonoBehaviour
     public TextMeshProUGUI timeUi;
     public TextMeshProUGUI score1UI;
     public TextMeshProUGUI score2UI;
+    public TextMeshProUGUI perc1UI;
+    public TextMeshProUGUI perc2UI;
+    
     public GameObject endScreen;
     public TextMeshProUGUI endScreenText;
     public GameObject gameUI;
@@ -24,7 +27,8 @@ public class Manager : MonoBehaviour
     private bool Dedlock1 = true;
     private bool Dedlock2 = true;
     private float time;
-    
+    private float pl1Perc;
+    private float pl2Perc;
     
 
 
@@ -50,6 +54,9 @@ public class Manager : MonoBehaviour
     {
         pl1Ded = Movemnt1.isDed;
         pl2Ded = MovementTwo.isDed;
+        pl1Perc = pl1Fight.pl1Perc;
+        pl2Perc = pl2Fight.pl2Perc;
+        
 
         if (pl1Ded == true)
         {
@@ -90,6 +97,8 @@ public class Manager : MonoBehaviour
     {
         if (gameOver == false)
         {
+            perc1UI.text = (pl1Perc/10).ToString() + "%";
+            perc2UI.text = (pl2Perc/10).ToString() + "%";
             score1UI.text = score1.ToString();
             score2UI.text = score2.ToString();
             timeUi.text = time.ToString();

@@ -31,11 +31,13 @@ public class Movemnt1 : MonoBehaviour
     private float currentRotZ;
     private float currentRotY;
     private bool gameOver;
+    private bool hitStun;
     
 
  
     void Update()
     {
+        hitStun = pl1Fight.hitStun;
 
         if (gameOver == true)
         {
@@ -79,7 +81,7 @@ public class Movemnt1 : MonoBehaviour
         }
 
         //check for vertical stick input
-        if (controllerVertical > .8f)
+        if (controllerVertical > .8f && hitStun == false)
         {
             jump = true;
         }
@@ -93,12 +95,14 @@ public class Movemnt1 : MonoBehaviour
             canJump = true;
         }
 
-        if (controllerInput < -.5 && currentSpeed >= -speedCap)
+
+        //Movement !
+        if (controllerInput < -.5 && currentSpeed >= -speedCap && hitStun == false)
         {
             pl1.AddForce(-speed * .1f, 0, 0, ForceMode.VelocityChange);
         }
 
-        if (controllerInput > .5 && currentSpeed <= speedCap)
+        if (controllerInput > .5 && currentSpeed <= speedCap && hitStun == false)
         {
             pl1.AddForce(speed * .1f, 0, 0, ForceMode.VelocityChange);
         }
@@ -113,7 +117,7 @@ public class Movemnt1 : MonoBehaviour
         }
 
 
-        if (Input.GetButtonDown("Joystick5") && jumps > 0)
+        if (Input.GetButtonDown("Joystick5") && jumps > 0 && hitStun == false)
         {
             pl1.angularVelocity = new Vector3(0, currentRotY , -6);
             pl1.AddForce(-currentSpeed + (setSpeed * 5f), (-currentVertical + (jumpHeight *.75f)), 0, ForceMode.VelocityChange);
@@ -123,7 +127,7 @@ public class Movemnt1 : MonoBehaviour
 
         }
 
-        if (Input.GetButtonDown("Joystick4") && jumps > 0)
+        if (Input.GetButtonDown("Joystick4") && jumps > 0 && hitStun == false)
         {
             pl1.angularVelocity = new Vector3(0, currentRotY, 6);
             pl1.AddForce(-currentSpeed + (-setSpeed * 5f), (-currentVertical + (jumpHeight * .75f)), 0, ForceMode.VelocityChange);

@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class pl2Fight : MonoBehaviour
 {
 
-    private float pl2Perc;
+    public static float pl2Perc;
     private float pl2Meter = 0;
-    private bool hitStun;
+    public static bool hitStun;
     public Transform upperCut2;
     public Transform pl2;
     public GameObject uppercutCol2;
@@ -15,7 +16,7 @@ public class pl2Fight : MonoBehaviour
     public Rigidbody pl2RB;
     private float horizontalInput;
     private bool meterLock;
-
+    public bool iFrames2;
     private void Start()
     {
         StartCoroutine(MeterBurn());
@@ -42,8 +43,9 @@ public class pl2Fight : MonoBehaviour
     [System.Obsolete]
     public void Update()
     {
-        if (Input.GetButtonDown("Joystick2-1"))
+        if (Input.GetButtonDown("Joystick2-1") && hitStun == false)
         {
+         
             StartCoroutine(UpperCut2());
         }
         if (pl2Meter < 100 && meterLock == true)
@@ -61,12 +63,12 @@ public class pl2Fight : MonoBehaviour
         {
             horizontalInput = -1;
         }
-        Debug.Log(pl2Meter);
+        //Debug.Log(pl2Meter);
     }
 
     private void FixedUpdate()
     {
-         Debug.Log(pl2Meter);
+        // Debug.Log(pl2Meter);
     }
 
     [System.Obsolete]
@@ -108,12 +110,26 @@ public class pl2Fight : MonoBehaviour
 
     public void OnTriggerEnter(Collider collision)
     {
-        if(collision.gameObject.name == "Sphere")
+        if (collision.gameObject.name == "Sphere" && hitStun == false)
         {
-            pl2RB.AddForce(100f * pl2Perc / 500f, 100f * pl2Perc / 100f, 0);
-            pl2Perc += 20f;
+            
+            
+                Debug.Log(Mathf.Pow(pl2Perc, 1.2f) / 10000f);
+                StartCoroutine(HitStun());
+                pl2RB.AddForce(pl2Perc / 5f, pl2Perc, 0);
+                pl2Perc += 800f;
+            
             
         }
+    }
+
+    IEnumerator HitStun()
+    {
+        hitStun = true;
+        yield return new WaitForSeconds(Mathf.Pow(pl2Perc,1.2f) / 10000f);
+        hitStun = false;
+
+        yield return null;
     }
 
 }
