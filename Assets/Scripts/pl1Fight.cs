@@ -16,7 +16,8 @@ public class pl1Fight : MonoBehaviour
     private bool meterLock;
     public bool iFrames1;
     public Material red;
-    public Material dred;
+    public Material lred;
+    public MeshRenderer pl1MeshRender;
 
     private void Start()
     {
@@ -101,7 +102,7 @@ public class pl1Fight : MonoBehaviour
 
             upperCut.position = new Vector3(pl1.transform.position.x + horizontalInput * 1.2f, pl1.transform.position.y + .75f, 0f);
             yield return new WaitForSeconds(.02f);
-            
+
             uppercutParticals.enableEmission = false;
             uppercutCol.SetActive(false);
 
@@ -111,7 +112,7 @@ public class pl1Fight : MonoBehaviour
     }
     public void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.name == "Sphere" && hitStun == false)
+        if (collision.gameObject.name == "uppercut" && hitStun == false)
         {
             StartCoroutine(HitStun());
             //pl1RB.AddForce(pl1Perc / 5f, pl1Perc, 0);
@@ -125,10 +126,10 @@ public class pl1Fight : MonoBehaviour
     IEnumerator HitStun()
     {
         hitStun = true;
-        red.color = Color.black;
+        pl1MeshRender.material = lred;
         yield return new WaitForSeconds(Mathf.Pow(pl1Perc, 1.2f) / 10000f);
         hitStun = false;
-        red.color = Color.red;
+        pl1MeshRender.material = red;
 
         yield return null;
     }
