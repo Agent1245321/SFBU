@@ -12,7 +12,7 @@ public class pl1Fight : MonoBehaviour
     public GameObject uppercutCol;
     public ParticleSystem uppercutParticals;
     public Rigidbody pl1RB;
-    private float horizontalInput;
+    public static float pl1horizontalInput;
     private bool meterLock;
     
     public Material red;
@@ -21,9 +21,24 @@ public class pl1Fight : MonoBehaviour
     private float bonusHitstun;
     private float hitStunMultiplier;
 
+    public static bool pl2Gm1HS;
+    public static bool pl2Gm2HS;
+    public static bool pl2Gm3HS;
 
+    
 
-  
+    //gentelemn
+    private int gstage;
+    public Transform gentelmen1T;
+    public Transform gentelmen2T;
+    public Transform gentelmen3T;
+    public GameObject gentelmen1O;
+    public GameObject gentelmen2O;
+    public GameObject gentelmen3O;
+
+    private bool g2active;
+    private bool g3active;
+
 
 
     private void Start()
@@ -58,10 +73,10 @@ public class pl1Fight : MonoBehaviour
 
 
 
-        if (Input.GetButtonDown("Joystick1-1") && hitStun == false)
-        {
-            StartCoroutine(UpperCut());
-        }
+        //if (Input.GetButtonDown("Joystick1-1") && hitStun == false)
+        //{
+        //    StartCoroutine(Gentelmen1());
+       // }
         if (pl1Meter < 100 && meterLock == true)
         {
             meterLock = false;
@@ -70,13 +85,24 @@ public class pl1Fight : MonoBehaviour
 
         if(Input.GetAxis("Joystick1Horizontal2") > .8f)
         {
-            horizontalInput = 1;
+            pl1horizontalInput = 1;
         }
 
         if (Input.GetAxis("Joystick1Horizontal2") < -0.8f)
         {
-            horizontalInput = -1;
+            pl1horizontalInput = -1;
 
+        }
+
+        if (Input.GetButtonDown("Joystick1-1") && hitStun == false)
+        {
+
+
+            if (gstage == 0)
+            {
+                StartCoroutine(Gentelmen1());
+            }
+            gstage += 1;
         }
     }
 
@@ -92,26 +118,26 @@ public class pl1Fight : MonoBehaviour
         {
             pl1Meter -= 25f;
             uppercutCol.SetActive(true);
-            upperCut.position = new Vector3(pl1.transform.position.x + horizontalInput * .8f, pl1.transform.position.y - .75f, 0f);
+            upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * .8f, pl1.transform.position.y - .75f, 0f);
             yield return new WaitForSeconds(.02f);
             uppercutParticals.enableEmission = true;
 
-            upperCut.position = new Vector3(pl1.transform.position.x + horizontalInput * 1f, pl1.transform.position.y - .5f, 0f);
+            upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1f, pl1.transform.position.y - .5f, 0f);
             yield return new WaitForSeconds(.02f);
 
-            upperCut.position = new Vector3(pl1.transform.position.x + horizontalInput * 1.1f, pl1.transform.position.y - .25f, 0f);
+            upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1.1f, pl1.transform.position.y - .25f, 0f);
             yield return new WaitForSeconds(.02f);          
 
-            upperCut.position = new Vector3(pl1.transform.position.x + horizontalInput * 1.2f, pl1.transform.position.y, 0f);
+            upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1.2f, pl1.transform.position.y, 0f);
             yield return new WaitForSeconds(.02f);
 
-            upperCut.position = new Vector3(pl1.transform.position.x + horizontalInput * 1.3f, pl1.transform.position.y + .25f, 0f);
+            upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1.3f, pl1.transform.position.y + .25f, 0f);
             yield return new WaitForSeconds(.02f);
 
-            upperCut.position = new Vector3(pl1.transform.position.x + horizontalInput * 1.3f, pl1.transform.position.y + .5f, 0f);
+            upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1.3f, pl1.transform.position.y + .5f, 0f);
             yield return new WaitForSeconds(.02f);
 
-            upperCut.position = new Vector3(pl1.transform.position.x + horizontalInput * 1.2f, pl1.transform.position.y + .75f, 0f);
+            upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1.2f, pl1.transform.position.y + .75f, 0f);
             yield return new WaitForSeconds(.02f);
 
             uppercutParticals.enableEmission = false;
@@ -120,6 +146,152 @@ public class pl1Fight : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    IEnumerator Gentelmen1()
+    {
+        yield return new WaitForSeconds(.2f);
+
+        gentelmen1T.position = new Vector3(pl1.position.x + pl1horizontalInput * .5f, pl1.position.y + -.5f, 0f);
+        gentelmen1O.SetActive(true);
+        gentelmen1T.position = new Vector3(pl1.position.x + pl1horizontalInput * .8f, pl1.position.y + -.4f, 0f);
+        yield return new WaitForSeconds(.02f);
+
+        if (gstage >= 2 && g2active == false)
+        {
+            StartCoroutine(Gentelmen2());
+        }
+
+        gentelmen1T.position = new Vector3(pl1.position.x + pl1horizontalInput * 1f, pl1.position.y + -.3f, 0f);
+        yield return new WaitForSeconds(.02f);
+
+        if (gstage >= 2 && g2active == false)
+        {
+            StartCoroutine(Gentelmen2());
+        }
+
+        gentelmen1T.position = new Vector3(pl1.position.x + pl1horizontalInput * 1.1f, pl1.position.y + .1f, 0f);
+        yield return new WaitForSeconds(.02f);
+
+        if (gstage >= 2)
+        {
+            StartCoroutine(Gentelmen2());
+        }
+
+        gentelmen1T.position = new Vector3(pl1.position.x + pl1horizontalInput * 1.2f, pl1.position.y + .5f, 0f);
+        yield return new WaitForSeconds(.02f);
+
+        if (gstage >= 2 && g2active == false)
+        {
+            StartCoroutine(Gentelmen2());
+        }
+
+        gentelmen1T.position = new Vector3(pl1.position.x + pl1horizontalInput * 1.3f, pl1.position.y + 1f, 0f);
+        gentelmen1O.SetActive(false);
+
+
+
+        if (gstage >= 2 && g2active == false)
+        {
+            StartCoroutine(Gentelmen2());
+        }
+
+        yield return new WaitForSeconds(.5f);
+
+
+        if (g2active == false)
+        {
+            yield return new WaitForSeconds(.5f);
+            gstage = 0;
+        }
+        pl2Gm1HS = false;
+        yield return null;
+    }
+
+    IEnumerator Gentelmen2()
+    {
+        g2active = true;
+        yield return new WaitForSeconds(.1f);
+
+        gentelmen2T.position = new Vector3(pl1.position.x + pl1horizontalInput * .5f, pl1.position.y + .8f, 0f);
+        gentelmen2O.SetActive(true);
+        gentelmen2T.position = new Vector3(pl1.position.x + pl1horizontalInput * .8f, pl1.position.y + .7f, 0f);
+        yield return new WaitForSeconds(.02f);
+
+        if (gstage >= 3 && g3active == false)
+        {
+            StartCoroutine(Gentelmen3());
+        }
+
+        gentelmen2T.position = new Vector3(pl1.position.x + pl1horizontalInput * 1f, pl1.position.y + .6f, 0f);
+        yield return new WaitForSeconds(.02f);
+
+        if (gstage >= 3 && g3active == false)
+        {
+            StartCoroutine(Gentelmen3());
+        }
+
+        gentelmen2T.position = new Vector3(pl1.position.x + pl1horizontalInput * 1.1f, pl1.position.y + .3f, 0f);
+        yield return new WaitForSeconds(.02f);
+
+        if (gstage >= 3 && g3active == false)
+        {
+            StartCoroutine(Gentelmen3());
+        }
+
+        gentelmen2T.position = new Vector3(pl1.position.x + pl1horizontalInput * 1.2f, pl1.position.y + -.1f, 0f);
+        yield return new WaitForSeconds(.02f);
+
+        if (gstage >= 3 && g3active == false)
+        {
+            StartCoroutine(Gentelmen3());
+        }
+
+        gentelmen2T.position = new Vector3(pl1.position.x + pl1horizontalInput * 1.3f, pl1.position.y + -.6f, 0f);
+        gentelmen2O.SetActive(false);
+
+        if (gstage >= 3 && g3active == false)
+        {
+            StartCoroutine(Gentelmen3());
+        }
+
+        yield return new WaitForSeconds(.5f);
+
+        if (g3active == false)
+        {
+            yield return new WaitForSeconds(.5f);
+            gstage = 0;
+        }
+
+        g2active = false;
+        pl2Gm2HS = false;
+        yield return null;
+    }
+
+    IEnumerator Gentelmen3()
+    {
+        g3active = true;
+        yield return new WaitForSeconds(.1f);
+
+        gentelmen3T.position = new Vector3(pl1.position.x + pl1horizontalInput * .5f, pl1.position.y, 0f);
+        gentelmen3O.SetActive(true);
+        gentelmen3T.position = new Vector3(pl1.position.x + pl1horizontalInput * .6f, pl1.position.y, 0f);
+        yield return new WaitForSeconds(.02f);
+        gentelmen3T.position = new Vector3(pl1.position.x + pl1horizontalInput * .8f, pl1.position.y, 0f);
+        yield return new WaitForSeconds(.02f);
+        gentelmen3T.position = new Vector3(pl1.position.x + pl1horizontalInput * 1f, pl1.position.y, 0f);
+        yield return new WaitForSeconds(.02f);
+        gentelmen3T.position = new Vector3(pl1.position.x + pl1horizontalInput * 1.3f, pl1.position.y, 0f);
+        yield return new WaitForSeconds(.02f);
+        gentelmen3T.position = new Vector3(pl1.position.x + pl1horizontalInput * 1.6f, pl1.position.y, 0f);
+        gentelmen3O.SetActive(false);
+
+        yield return new WaitForSeconds(.5f);
+        gstage = 0;
+
+        g3active = false;
+        pl2Gm3HS = false;
+        yield return null;
     }
     public void OnTriggerEnter(Collider collision)
     {

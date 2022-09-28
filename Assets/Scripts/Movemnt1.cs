@@ -142,12 +142,12 @@ public class Movemnt1 : MonoBehaviour
         //Debug.Log(controllerHorizontal2);
         if (controllerHorizontal2 > .8f)
         {
-            pl1.angularVelocity = new Vector3(0, -10, currentRotZ);
+            //pl1.angularVelocity = new Vector3(0, -10, currentRotZ);
         }
 
         if (controllerHorizontal2 < -.8f)
         {
-            pl1.angularVelocity = new Vector3(0, 10, currentRotZ);
+           // pl1.angularVelocity = new Vector3(0, 10, currentRotZ);
         }
 
 

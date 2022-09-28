@@ -27,10 +27,12 @@ public class MovementTwo : MonoBehaviour
     private float currentRotZ;
     private float currentRotY;
     private bool gameOver;
+    private bool hitStun;
 
     private float controllerHorizontal2;
     void Update()
     {
+        hitStun = pl2Fight.hitStun;
 
         if (gameOver == true)
         {
@@ -76,7 +78,7 @@ public class MovementTwo : MonoBehaviour
 
 
         //check for vertical stick input
-        if (controllerVertical > .8f)
+        if (controllerVertical > .8f && hitStun == false)
         {
             jump = true;
         }
@@ -85,7 +87,7 @@ public class MovementTwo : MonoBehaviour
             jump = false;
         }
         //checks if stick was released and allows you to jump
-        if (controllerVertical < .8f)
+        if (controllerVertical < .8f )
         {
             canJump = true;
         }
@@ -95,18 +97,15 @@ public class MovementTwo : MonoBehaviour
         Joystick4 = L1
         Joystick5 = R1
             */
-        if (Input.GetButtonDown("Joystick2-5"))
-        {
-            //Debug.Log("Input");
-        }
+        
 
         //movement on the horizontal.
-        if (controllerInput < -.5 && currentspeed2 >= -speedCap2)
+        if (controllerInput < -.5 && currentspeed2 >= -speedCap2 && hitStun == false)
         {
             pl2.AddForce(-speed2 * .1f, 0, 0, ForceMode.VelocityChange);
         }
 
-        if (controllerInput > .5 && currentspeed2 <= speedCap2)
+        if (controllerInput > .5 && currentspeed2 <= speedCap2 && hitStun == false)
         {
             pl2.AddForce(speed2 * .1f, 0, 0, ForceMode.VelocityChange);
         }
@@ -120,7 +119,7 @@ public class MovementTwo : MonoBehaviour
         }
 
 
-        if (Input.GetButtonDown("Joystick2-5") && jumps2 > 0)
+        if (Input.GetButtonDown("Joystick2-5") && jumps2 > 0 && hitStun == false)
         {
             pl2.angularVelocity = new Vector3(0, currentRotY, -6);
             pl2.AddForce(-currentspeed2 + (setSpeed * 5f), (-currentVertical2 + (jumpheight2 * .75f)), 0, ForceMode.VelocityChange);
@@ -130,7 +129,7 @@ public class MovementTwo : MonoBehaviour
 
         }
 
-        if (Input.GetButtonDown("Joystick2-4") && jumps2 > 0)
+        if (Input.GetButtonDown("Joystick2-4") && jumps2 > 0 && hitStun == false)
         {
             pl2.angularVelocity = new Vector3(0, currentRotY, 6);
             pl2.AddForce(-currentspeed2 + (-setSpeed * 5f), (-currentVertical2 + (jumpheight2 * .75f)), 0, ForceMode.VelocityChange);
@@ -140,7 +139,7 @@ public class MovementTwo : MonoBehaviour
 
         }
 
-        if (controllerHorizontal2 > .8f)
+        if (controllerHorizontal2 > .8f )
         {
             //pl2.angularVelocity = new Vector3(0, -10, currentRotZ);
         }
