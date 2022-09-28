@@ -142,12 +142,12 @@ public class MovementTwo : MonoBehaviour
 
         if (controllerHorizontal2 > .8f)
         {
-            pl2.angularVelocity = new Vector3(0, -10, currentRotZ);
+            //pl2.angularVelocity = new Vector3(0, -10, currentRotZ);
         }
 
         if (controllerHorizontal2 < -.8f)
         {
-            pl2.angularVelocity = new Vector3(0, 10, currentRotZ);
+            //pl2.angularVelocity = new Vector3(0, 10, currentRotZ);
         }
 
 

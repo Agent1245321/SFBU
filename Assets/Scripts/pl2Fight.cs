@@ -11,7 +11,7 @@ public class pl2Fight : MonoBehaviour
     public static bool hitStun;
     public Transform pl2;
     public Rigidbody pl2RB;
-    private float horizontalInput;
+    public static float horizontalInput;
     private bool meterLock;
     public bool iFrames2;
 
@@ -33,6 +33,11 @@ public class pl2Fight : MonoBehaviour
     public int gstage;
     private bool g2active;
     private bool g3active;
+
+
+    public static bool pl1Gm1HS;
+    public static bool pl1Gm2HS;
+    public static bool pl1Gm3HS;
 
     private void Start()
     {
@@ -60,7 +65,10 @@ public class pl2Fight : MonoBehaviour
 
     [System.Obsolete]
     public void Update()
+
     {
+
+        Debug.Log(pl1Gm1HS);
         //if (Input.GetButtonDown("Joystick2-1") && hitStun == false)
             
        // {
@@ -143,15 +151,27 @@ public class pl2Fight : MonoBehaviour
 
     IEnumerator Gentelmen1()
     {
-        yield return new WaitForSeconds(.1f);
-        Debug.Log("1");
+        yield return new WaitForSeconds(.2f);
+        
         gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * .5f, pl2.position.y + -.5f ,0f);
         gentelmen1O.SetActive(true);
-        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * .6f, pl2.position.y + -.3f, 0f);
+        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * .8f, pl2.position.y + -.4f, 0f);
         yield return new WaitForSeconds(.02f);
-        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * .8f, pl2.position.y + -.1f, 0f);
+
+        if (gstage >= 2 && g2active == false)
+        {
+            StartCoroutine(Gentelmen2());
+        }
+
+        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * 1f, pl2.position.y + -.3f, 0f);
         yield return new WaitForSeconds(.02f);
-        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * 1f, pl2.position.y + .2f, 0f);
+
+        if (gstage >= 2 && g2active == false)
+        {
+            StartCoroutine(Gentelmen2());
+        }
+
+        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * 1.1f, pl2.position.y + .1f, 0f);
         yield return new WaitForSeconds(.02f);
 
         if(gstage >= 2)
@@ -159,17 +179,33 @@ public class pl2Fight : MonoBehaviour
             StartCoroutine(Gentelmen2());
         }
 
-        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * 1.3f, pl2.position.y + .5f, 0f);
+        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * 1.2f, pl2.position.y + .5f, 0f);
         yield return new WaitForSeconds(.02f);
-        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * 1.6f, pl2.position.y + .8f, 0f);
+
+        if (gstage >= 2 && g2active == false)
+        {
+            StartCoroutine(Gentelmen2());
+        }
+
+        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * 1.3f, pl2.position.y + 1f, 0f);
         gentelmen1O.SetActive(false);
+
+        
+
+        if (gstage >= 2 && g2active == false)
+        {
+            StartCoroutine(Gentelmen2());
+        }
+
+        yield return new WaitForSeconds(.5f);
+
 
         if (g2active == false)
         {
             yield return new WaitForSeconds(.5f);
             gstage = 0;
         }
-
+        pl1Gm1HS = false;
         yield return null;
     }
 
@@ -177,33 +213,59 @@ public class pl2Fight : MonoBehaviour
     {
         g2active = true;
         yield return new WaitForSeconds(.1f);
-        Debug.Log("2");
+        
         gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * .5f, pl2.position.y + .8f, 0f);
         gentelmen2O.SetActive(true);
-        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * .6f, pl2.position.y + .5f, 0f);
-        yield return new WaitForSeconds(.02f);
-        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * .8f, pl2.position.y + .2f, 0f);
-        yield return new WaitForSeconds(.02f);
-        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * 1f, pl2.position.y + -.1f, 0f);
+        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * .8f, pl2.position.y + .7f, 0f);
         yield return new WaitForSeconds(.02f);
 
-        if (gstage >= 3)
+        if (gstage >= 3 && g3active == false)
         {
             StartCoroutine(Gentelmen3());
         }
 
-        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * 1.3f, pl2.position.y + -.3f, 0f);
+        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * 1f, pl2.position.y + .6f, 0f);
         yield return new WaitForSeconds(.02f);
-        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * 1.6f, pl2.position.y + -.5f, 0f);
+
+        if (gstage >= 3 && g3active == false)
+        {
+            StartCoroutine(Gentelmen3());
+        }
+
+        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * 1.1f, pl2.position.y + .3f, 0f);
+        yield return new WaitForSeconds(.02f);
+
+        if (gstage >= 3 && g3active == false)
+        {
+            StartCoroutine(Gentelmen3());
+        }
+
+        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * 1.2f, pl2.position.y + -.1f, 0f);
+        yield return new WaitForSeconds(.02f);
+
+        if (gstage >= 3 && g3active == false)
+        {
+            StartCoroutine(Gentelmen3());
+        }
+
+        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * 1.3f, pl2.position.y + -.6f, 0f);
         gentelmen2O.SetActive(false);
+
+        if (gstage >= 3 && g3active == false)
+        {
+            StartCoroutine(Gentelmen3());
+        }
+
+        yield return new WaitForSeconds(.5f);
 
         if (g3active == false)
         {
             yield return new WaitForSeconds(.5f);
             gstage = 0;
         }
-        g2active = false;
 
+        g2active = false;
+        pl1Gm2HS = false;
         yield return null;
     }
 
@@ -211,7 +273,7 @@ public class pl2Fight : MonoBehaviour
     {
         g3active = true;
         yield return new WaitForSeconds(.1f);
-        Debug.Log("3");
+        
         gentelmen3T.position = new Vector3(pl2.position.x + horizontalInput * .5f, pl2.position.y, 0f);
         gentelmen3O.SetActive(true);
         gentelmen3T.position = new Vector3(pl2.position.x + horizontalInput * .6f, pl2.position.y, 0f);
@@ -229,6 +291,7 @@ public class pl2Fight : MonoBehaviour
         gstage = 0;
 
         g3active = false;
+        pl1Gm3HS = false;
         yield return null;
     }
 

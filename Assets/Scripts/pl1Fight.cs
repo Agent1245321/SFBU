@@ -14,10 +14,17 @@ public class pl1Fight : MonoBehaviour
     public Rigidbody pl1RB;
     private float horizontalInput;
     private bool meterLock;
-    public bool iFrames1;
+    
     public Material red;
     public Material lred;
     public MeshRenderer pl1MeshRender;
+    private float bonusHitstun;
+    private float hitStunMultiplier;
+
+
+
+  
+
 
     private void Start()
     {
@@ -45,7 +52,11 @@ public class pl1Fight : MonoBehaviour
     [System.Obsolete]
     public void Update()
     {
-        // uppercut start
+
+
+
+
+
 
         if (Input.GetButtonDown("Joystick1-1") && hitStun == false)
         {
@@ -112,12 +123,41 @@ public class pl1Fight : MonoBehaviour
     }
     public void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.name == "uppercut" && hitStun == false)
+        if (collision.gameObject.name == "uppercut")
         {
             StartCoroutine(HitStun());
             //pl1RB.AddForce(pl1Perc / 5f, pl1Perc, 0);
             pl1Perc += 800f;
+        }
 
+        if (collision.gameObject.name == "gm1" && pl2Fight.pl1Gm1HS == false)
+        {
+            pl2Fight.pl1Gm1HS = true;
+            hitStunMultiplier = 0;
+            bonusHitstun = .05f;
+            StartCoroutine(HitStun());
+            pl1RB.AddForce(pl2Fight.horizontalInput * pl1Perc / 500f,  -pl1RB.velocity.y + pl1Perc / 20f, 0);
+            pl1Perc += 50f;
+        }
+
+        if (collision.gameObject.name == "gm2" && pl2Fight.pl1Gm2HS == false)
+        {
+            pl2Fight.pl1Gm2HS = true;
+            hitStunMultiplier = .2f;
+            bonusHitstun = .05f;
+            StartCoroutine(HitStun());
+            pl1RB.AddForce(pl2Fight.horizontalInput * pl1Perc / 500f, -pl1RB.velocity.y + - pl1Perc / 20f, 0);
+            pl1Perc += 50f;
+        }
+
+        if (collision.gameObject.name == "gm3" && pl2Fight.pl1Gm3HS == false)
+        {
+            pl2Fight.pl1Gm3HS = true;
+            hitStunMultiplier = .5f;
+            bonusHitstun = .1f;
+            StartCoroutine(HitStun());
+            pl1RB.AddForce(pl2Fight.horizontalInput * (pl1Perc / 5f), -pl1RB.velocity.y + pl1Perc / 20f, 0);
+            pl1Perc += 80f;
         }
     }
 
@@ -127,7 +167,7 @@ public class pl1Fight : MonoBehaviour
     {
         hitStun = true;
         pl1MeshRender.material = lred;
-        yield return new WaitForSeconds(Mathf.Pow(pl1Perc, 1.2f) / 10000f);
+        yield return new WaitForSeconds(hitStunMultiplier * (Mathf.Pow(pl1Perc, 1.2f) / 10000f) + bonusHitstun);
         hitStun = false;
         pl1MeshRender.material = red;
 
