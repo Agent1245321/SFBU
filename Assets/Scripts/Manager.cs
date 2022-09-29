@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Manager : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class Manager : MonoBehaviour
     public float timeset;
     public static bool gameOver;
     public bool testMode;
+    public Image pl1MeterImg;
+    public Image pl2MeterImg;
+    
 
 
     private bool pl1Ded;
@@ -35,16 +39,19 @@ public class Manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         if(testMode == false)
         {
             menu.SetActive(true);
             endScreen.SetActive(false);
+            gameUI.SetActive(false);
         }
 
         if(testMode == true)
         {
             menu.SetActive(false);
             endScreen.SetActive(false);
+            gameUI.SetActive(true);
         }
         // ^ calls to start the timer
     }
@@ -72,12 +79,14 @@ public class Manager : MonoBehaviour
         {
             score2 = score2 + 1;
             Dedlock1 = true;
+            pl1Fight.pl1Perc = 0;
         }
 
         if (Dedlock2 == false && pl2Ded == false)
         {
             score1 = score1 + 1;
             Dedlock2 = true;
+            pl2Fight.pl2Perc = 0;
         }
 
 
@@ -102,6 +111,8 @@ public class Manager : MonoBehaviour
             score1UI.text = score1.ToString();
             score2UI.text = score2.ToString();
             timeUi.text = time.ToString();
+            pl1MeterImg.fillAmount = pl1Fight.pl1Meter / 100f;
+            pl2MeterImg.fillAmount = pl2Fight.pl2Meter / 100f;
         }
        
     }

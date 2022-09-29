@@ -8,7 +8,7 @@ public class pl2Fight : MonoBehaviour
 
     public static float pl2Perc;
 
-    private float pl2Meter = 0;
+    public static float pl2Meter = 0;
     public static bool hitStun;
     public Transform pl2;
     public Rigidbody pl2RB;
@@ -80,12 +80,12 @@ public class pl2Fight : MonoBehaviour
             pl1Fight.pl1Perc = 5000f;
         }
         Debug.Log(pl1Gm1HS);
-        //if (Input.GetButtonDown("Joystick2-1") && hitStun == false)
+        if (Input.GetButtonDown("Joystick2-1") && hitStun == false)
             
-       // {
+        {
          
-           // StartCoroutine(Gentelmen1());
-       // }
+            StartCoroutine(UpperCut2());
+       }
         if (pl2Meter < 100 && meterLock == true)
         {
             meterLock = false;
@@ -103,7 +103,7 @@ public class pl2Fight : MonoBehaviour
         }
         //Debug.Log(pl2Meter);
 
-        if(Input.GetButtonDown("Joystick2-1") && hitStun == false)
+        if(Input.GetButtonDown("Joystick2-0") && hitStun == false)
         {
             
             
@@ -308,25 +308,24 @@ public class pl2Fight : MonoBehaviour
 
     public void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.name == "Sphere" && hitStun == false)
-        {
-            
-            
-                Debug.Log(Mathf.Pow(pl2Perc, 1.2f) / 10000f);
+        if (collision.gameObject.name == "uppercut")
+        { 
+                hitStunMultiplier2 = 1;
+                bonusHitstun2 = 1f;
                 StartCoroutine(HitStun());
-                pl2RB.AddForce(pl2Perc / 5f, pl2Perc, 0);
-                pl2Perc += 800f;
+                pl2RB.AddForce(pl1Fight.pl1horizontalInput * pl2Perc / 500f, -pl2RB.velocity.y + pl2Perc / 2.5f, 0);
+                pl2Perc += 50f;
             
             
         }
 
-        if (collision.gameObject.name == "pl2gm1" && pl2Fight.pl1Gm1HS == false)
+        if (collision.gameObject.name == "pl2gm1" && pl1Fight.pl2Gm1HS == false)
         {
             pl1Fight.pl2Gm1HS = true;
             hitStunMultiplier2 = 0;
             bonusHitstun2 = .05f;
             StartCoroutine(HitStun());
-            pl2RB.AddForce(pl1Fight.pl1horizontalInput * pl2Perc / 500f, -pl2RB.velocity.y + pl2Perc / 20f, 0);
+            pl2RB.AddForce(pl1Fight.pl1horizontalInput * pl2Perc / 500f, -pl2RB.velocity.y + pl2Perc / 2.5f, 0);
             pl2Perc += 50f;
         }
 
@@ -336,8 +335,8 @@ public class pl2Fight : MonoBehaviour
             hitStunMultiplier2 = .2f;
             bonusHitstun2 = .05f;
             StartCoroutine(HitStun());
-            pl2RB.AddForce(pl1Fight.pl1horizontalInput * pl2Perc / 500f, -pl2RB.velocity.y + -pl2Perc / 20f, 0);
-            pl2Perc += 50f;
+            pl2RB.AddForce(pl1Fight.pl1horizontalInput * pl2Perc / 500f, -pl2RB.velocity.y + -pl2Perc / 5f, 0);
+            pl2Perc += 30f;
         }
 
         if (collision.gameObject.name == "pl2gm3" && pl1Fight.pl2Gm3HS == false)
@@ -346,8 +345,8 @@ public class pl2Fight : MonoBehaviour
             hitStunMultiplier2 = .5f;
             bonusHitstun2 = .1f;
             StartCoroutine(HitStun());
-            pl2RB.AddForce(pl1Fight.pl1horizontalInput * (pl2Perc / 5f), -pl2RB.velocity.y + pl2Perc / 20f, 0);
-            pl2Perc += 80f;
+            pl2RB.AddForce(pl1Fight.pl1horizontalInput * (pl2Perc / 1.25f), -pl2RB.velocity.y + pl2Perc / 5f, 0);
+            pl2Perc += 90f;
         }
     }
 

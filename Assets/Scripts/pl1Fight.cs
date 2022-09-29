@@ -5,7 +5,7 @@ using UnityEngine;
 public class pl1Fight : MonoBehaviour
 {
     public static float pl1Perc;
-    private float pl1Meter = 0;
+    public static float pl1Meter = 0;
     public static bool hitStun;
     public Transform upperCut;
     public Transform pl1;
@@ -73,10 +73,10 @@ public class pl1Fight : MonoBehaviour
 
 
 
-        //if (Input.GetButtonDown("Joystick1-1") && hitStun == false)
-        //{
-        //    StartCoroutine(Gentelmen1());
-       // }
+        if (Input.GetButtonDown("Joystick1-1") && hitStun == false)
+        {
+            StartCoroutine(UpperCut());
+       }
         if (pl1Meter < 100 && meterLock == true)
         {
             meterLock = false;
@@ -94,7 +94,7 @@ public class pl1Fight : MonoBehaviour
 
         }
 
-        if (Input.GetButtonDown("Joystick1-1") && hitStun == false)
+        if (Input.GetButtonDown("Joystick1-0") && hitStun == false)
         {
 
 
@@ -295,11 +295,13 @@ public class pl1Fight : MonoBehaviour
     }
     public void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.name == "uppercut")
+        if (collision.gameObject.name == "uppercut2")
         {
+            hitStunMultiplier = 1;
+            bonusHitstun = 1f;
             StartCoroutine(HitStun());
-            //pl1RB.AddForce(pl1Perc / 5f, pl1Perc, 0);
-            pl1Perc += 800f;
+            pl1RB.AddForce(pl2Fight.horizontalInput * pl1Perc / 500f, -pl1RB.velocity.y + pl1Perc / 2.5f, 0);
+            pl1Perc += 50f;
         }
 
         if (collision.gameObject.name == "gm1" && pl2Fight.pl1Gm1HS == false)
@@ -308,7 +310,7 @@ public class pl1Fight : MonoBehaviour
             hitStunMultiplier = 0;
             bonusHitstun = .05f;
             StartCoroutine(HitStun());
-            pl1RB.AddForce(pl2Fight.horizontalInput * pl1Perc / 500f,  -pl1RB.velocity.y + pl1Perc / 20f, 0);
+            pl1RB.AddForce(pl2Fight.horizontalInput * pl1Perc / 500f,  -pl1RB.velocity.y + pl1Perc / 10f, 0);
             pl1Perc += 50f;
         }
 
@@ -318,8 +320,8 @@ public class pl1Fight : MonoBehaviour
             hitStunMultiplier = .2f;
             bonusHitstun = .05f;
             StartCoroutine(HitStun());
-            pl1RB.AddForce(pl2Fight.horizontalInput * pl1Perc / 500f, -pl1RB.velocity.y + - pl1Perc / 20f, 0);
-            pl1Perc += 50f;
+            pl1RB.AddForce(pl2Fight.horizontalInput * pl1Perc / 500f, -pl1RB.velocity.y + -pl1Perc / 20f, 0);
+            pl1Perc += 30f;
         }
 
         if (collision.gameObject.name == "gm3" && pl2Fight.pl1Gm3HS == false)
@@ -328,8 +330,8 @@ public class pl1Fight : MonoBehaviour
             hitStunMultiplier = .5f;
             bonusHitstun = .1f;
             StartCoroutine(HitStun());
-            pl1RB.AddForce(pl2Fight.horizontalInput * (pl1Perc / 5f), -pl1RB.velocity.y + pl1Perc / 20f, 0);
-            pl1Perc += 80f;
+            pl1RB.AddForce(pl2Fight.horizontalInput * (pl1Perc / 5f), -pl1RB.velocity.y + pl1Perc / 5f, 0);
+            pl1Perc += 90f;
         }
     }
 
