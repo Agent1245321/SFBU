@@ -33,6 +33,8 @@ public class Manager : MonoBehaviour
     private float time;
     private float pl1Perc;
     private float pl2Perc;
+
+    private float verticalDpad;
     
 
 
@@ -63,7 +65,7 @@ public class Manager : MonoBehaviour
         pl2Ded = MovementTwo.isDed;
         pl1Perc = pl1Fight.pl1Perc;
         pl2Perc = pl2Fight.pl2Perc;
-        
+        verticalDpad = Input.GetAxis("Joystick1Vertical3");
 
         if (pl1Ded == true)
         {
@@ -89,6 +91,11 @@ public class Manager : MonoBehaviour
             pl2Fight.pl2Perc = 0;
         }
 
+        if(verticalDpad > .8f)
+        {
+
+        }
+
 
         // Debug.Log(score1);
         //Debug.Log(score2);
@@ -100,6 +107,15 @@ public class Manager : MonoBehaviour
     public void OnButtonPress()
     {
         StartCoroutine(GameTimeCountdown());
+    }
+
+    public void OnButtonPress2()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 
     private void LateUpdate()
