@@ -140,6 +140,8 @@ public class Manager : MonoBehaviour
         {
             gameOver = false;
             time = timeset;
+            pl1Fight.pl1Perc = 0;
+            pl2Fight.pl2Perc = 0;
             score1 = 0;
             score2 = 0;
             gameUI.SetActive(true);

@@ -123,9 +123,9 @@ public class pl2Fight : MonoBehaviour
     [System.Obsolete]
     IEnumerator UpperCut2()
     {
-        if (pl2Meter >= 25f)
+        if (pl2Meter >= 50f)
         {
-            pl2Meter -= 25f;
+            pl2Meter -= 50f;
             uppercutCol2.SetActive(true);
             upperCut2.position = new Vector3(pl2.transform.position.x + horizontalInput * .8f, pl2.transform.position.y - .75f, 0f);
             yield return new WaitForSeconds(.02f);
