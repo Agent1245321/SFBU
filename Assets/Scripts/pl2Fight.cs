@@ -59,7 +59,7 @@ public class pl2Fight : MonoBehaviour
         while (pl2Meter < 100)
         {
             yield return new WaitForSeconds(.5f);
-            pl2Meter += 5;
+            pl2Meter += 2;
         }
 
         meterLock = true;
@@ -137,16 +137,16 @@ public class pl2Fight : MonoBehaviour
             upperCut2.position = new Vector3(pl2.transform.position.x + horizontalInput * 1.1f, pl2.transform.position.y - .25f, 0f);
             yield return new WaitForSeconds(.02f);
 
-            upperCut2.position = new Vector3(pl2.transform.position.x + horizontalInput * 1.2f, pl2.transform.position.y, 0f);
+            upperCut2.position = new Vector3(pl2.transform.position.x + horizontalInput * 1.3f, pl2.transform.position.y, 0f);
             yield return new WaitForSeconds(.02f);
 
-            upperCut2.position = new Vector3(pl2.transform.position.x + horizontalInput * 1.3f, pl2.transform.position.y + .25f, 0f);
+            upperCut2.position = new Vector3(pl2.transform.position.x + horizontalInput * 1.5f, pl2.transform.position.y + .25f, 0f);
             yield return new WaitForSeconds(.02f);
 
-            upperCut2.position = new Vector3(pl2.transform.position.x + horizontalInput * 1.3f, pl2.transform.position.y + .5f, 0f);
+            upperCut2.position = new Vector3(pl2.transform.position.x + horizontalInput * 1.7f, pl2.transform.position.y + .5f, 0f);
             yield return new WaitForSeconds(.02f);
 
-            upperCut2.position = new Vector3(pl2.transform.position.x + horizontalInput * 1.2f, pl2.transform.position.y + .75f, 0f);
+            upperCut2.position = new Vector3(pl2.transform.position.x + horizontalInput * 1.5f, pl2.transform.position.y + .75f, 0f);
             yield return new WaitForSeconds(.02f);
             
             uppercutParticles2.enableEmission = false;
@@ -164,9 +164,9 @@ public class pl2Fight : MonoBehaviour
     {
         yield return new WaitForSeconds(.2f);
         
-        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * .5f, pl2.position.y + -.5f ,0f);
+        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * .8f, pl2.position.y + -.5f ,0f);
         gentelmen1O.SetActive(true);
-        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * .8f, pl2.position.y + -.4f, 0f);
+        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * 1.2f, pl2.position.y + -.4f, 0f);
         yield return new WaitForSeconds(.02f);
 
         if (gstage >= 2 && g2active == false)
@@ -174,7 +174,7 @@ public class pl2Fight : MonoBehaviour
             StartCoroutine(Gentelmen2());
         }
 
-        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * 1f, pl2.position.y + -.3f, 0f);
+        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * 1.8f, pl2.position.y + -.3f, 0f);
         yield return new WaitForSeconds(.02f);
 
         if (gstage >= 2 && g2active == false)
@@ -182,7 +182,7 @@ public class pl2Fight : MonoBehaviour
             StartCoroutine(Gentelmen2());
         }
 
-        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * 1.1f, pl2.position.y + .1f, 0f);
+        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * 2.6f, pl2.position.y + .1f, 0f);
         yield return new WaitForSeconds(.02f);
 
         if(gstage >= 2)
@@ -190,7 +190,7 @@ public class pl2Fight : MonoBehaviour
             StartCoroutine(Gentelmen2());
         }
 
-        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * 1.2f, pl2.position.y + .5f, 0f);
+        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * 2.7f, pl2.position.y + .5f, 0f);
         yield return new WaitForSeconds(.02f);
 
         if (gstage >= 2 && g2active == false)
@@ -198,7 +198,7 @@ public class pl2Fight : MonoBehaviour
             StartCoroutine(Gentelmen2());
         }
 
-        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * 1.3f, pl2.position.y + 1f, 0f);
+        gentelmen1T.position = new Vector3(pl2.position.x + horizontalInput * 2.7f, pl2.position.y + 1f, 0f);
         gentelmen1O.SetActive(false);
 
         
@@ -225,9 +225,9 @@ public class pl2Fight : MonoBehaviour
         g2active = true;
         yield return new WaitForSeconds(.1f);
         
-        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * .5f, pl2.position.y + .8f, 0f);
+        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * .8f, pl2.position.y + .8f, 0f);
         gentelmen2O.SetActive(true);
-        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * .8f, pl2.position.y + .7f, 0f);
+        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * 1.2f, pl2.position.y + .7f, 0f);
         yield return new WaitForSeconds(.02f);
 
         if (gstage >= 3 && g3active == false)
@@ -235,7 +235,7 @@ public class pl2Fight : MonoBehaviour
             StartCoroutine(Gentelmen3());
         }
 
-        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * 1f, pl2.position.y + .6f, 0f);
+        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * 1.8f, pl2.position.y + .6f, 0f);
         yield return new WaitForSeconds(.02f);
 
         if (gstage >= 3 && g3active == false)
@@ -243,7 +243,7 @@ public class pl2Fight : MonoBehaviour
             StartCoroutine(Gentelmen3());
         }
 
-        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * 1.1f, pl2.position.y + .3f, 0f);
+        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * 2.6f, pl2.position.y + .3f, 0f);
         yield return new WaitForSeconds(.02f);
 
         if (gstage >= 3 && g3active == false)
@@ -251,7 +251,7 @@ public class pl2Fight : MonoBehaviour
             StartCoroutine(Gentelmen3());
         }
 
-        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * 1.2f, pl2.position.y + -.1f, 0f);
+        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * 2.7f, pl2.position.y + -.1f, 0f);
         yield return new WaitForSeconds(.02f);
 
         if (gstage >= 3 && g3active == false)
@@ -259,7 +259,7 @@ public class pl2Fight : MonoBehaviour
             StartCoroutine(Gentelmen3());
         }
 
-        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * 1.3f, pl2.position.y + -.6f, 0f);
+        gentelmen2T.position = new Vector3(pl2.position.x + horizontalInput * 2.7f, pl2.position.y + -.6f, 0f);
         gentelmen2O.SetActive(false);
 
         if (gstage >= 3 && g3active == false)
@@ -287,15 +287,15 @@ public class pl2Fight : MonoBehaviour
         
         gentelmen3T.position = new Vector3(pl2.position.x + horizontalInput * .5f, pl2.position.y, 0f);
         gentelmen3O.SetActive(true);
-        gentelmen3T.position = new Vector3(pl2.position.x + horizontalInput * .6f, pl2.position.y, 0f);
+        gentelmen3T.position = new Vector3(pl2.position.x + horizontalInput * .9f, pl2.position.y, 0f);
         yield return new WaitForSeconds(.02f);
-        gentelmen3T.position = new Vector3(pl2.position.x + horizontalInput * .8f, pl2.position.y, 0f);
+        gentelmen3T.position = new Vector3(pl2.position.x + horizontalInput * 1.4f, pl2.position.y, 0f);
         yield return new WaitForSeconds(.02f);
-        gentelmen3T.position = new Vector3(pl2.position.x + horizontalInput * 1f, pl2.position.y, 0f);
+        gentelmen3T.position = new Vector3(pl2.position.x + horizontalInput * 2f, pl2.position.y, 0f);
         yield return new WaitForSeconds(.02f);
-        gentelmen3T.position = new Vector3(pl2.position.x + horizontalInput * 1.3f, pl2.position.y, 0f);
+        gentelmen3T.position = new Vector3(pl2.position.x + horizontalInput * 2.7f, pl2.position.y, 0f);
         yield return new WaitForSeconds(.02f);
-        gentelmen3T.position = new Vector3(pl2.position.x + horizontalInput * 1.6f, pl2.position.y, 0f);
+        gentelmen3T.position = new Vector3(pl2.position.x + horizontalInput * 2.9f, pl2.position.y, 0f);
         gentelmen3O.SetActive(false);
 
         yield return new WaitForSeconds(.5f);

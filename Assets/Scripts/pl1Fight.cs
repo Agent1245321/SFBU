@@ -54,7 +54,7 @@ public class pl1Fight : MonoBehaviour
         while (pl1Meter < 100)
         {
             yield return new WaitForSeconds(.5f);
-            pl1Meter += 5;
+            pl1Meter += 2;
         }
 
         meterLock = true;
@@ -128,16 +128,16 @@ public class pl1Fight : MonoBehaviour
             upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1.1f, pl1.transform.position.y - .25f, 0f);
             yield return new WaitForSeconds(.02f);          
 
-            upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1.2f, pl1.transform.position.y, 0f);
+            upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1.3f, pl1.transform.position.y, 0f);
             yield return new WaitForSeconds(.02f);
 
-            upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1.3f, pl1.transform.position.y + .25f, 0f);
+            upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1.5f, pl1.transform.position.y + .25f, 0f);
             yield return new WaitForSeconds(.02f);
 
-            upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1.3f, pl1.transform.position.y + .5f, 0f);
+            upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1.7f, pl1.transform.position.y + .5f, 0f);
             yield return new WaitForSeconds(.02f);
 
-            upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1.2f, pl1.transform.position.y + .75f, 0f);
+            upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1.5f, pl1.transform.position.y + .75f, 0f);
             yield return new WaitForSeconds(.02f);
 
             uppercutParticals.enableEmission = false;
