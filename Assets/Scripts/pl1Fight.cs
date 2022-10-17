@@ -11,6 +11,7 @@ public class pl1Fight : MonoBehaviour
     public Transform pl1;
     public GameObject uppercutCol;
     public ParticleSystem uppercutParticals;
+    public Transform uppt;
     public Rigidbody pl1RB;
     public static float pl1horizontalInput;
     private bool meterLock;
@@ -35,9 +36,13 @@ public class pl1Fight : MonoBehaviour
     public GameObject gentelmen1O;
     public GameObject gentelmen2O;
     public GameObject gentelmen3O;
+    
 
     private bool g2active;
     private bool g3active;
+
+    //spikey
+    public GameObject urMom;
 
 
 
@@ -55,6 +60,10 @@ public class pl1Fight : MonoBehaviour
         {
             yield return new WaitForSeconds(.5f);
             pl1Meter += 2;
+            if (Input.GetKey("p"))
+            {
+                pl1Meter += 30;
+            }
         }
 
         meterLock = true;
@@ -67,7 +76,7 @@ public class pl1Fight : MonoBehaviour
     [System.Obsolete]
     public void Update()
     {
-        Debug.Log(pl1RB.velocity.y);
+       
 
 
 
@@ -108,7 +117,14 @@ public class pl1Fight : MonoBehaviour
 
     private void FixedUpdate()
     {
-       
+        if(Input.GetButton("Joystick1-3"))
+        {
+            urMom.SetActive(true);
+        }
+        else
+        {
+            urMom.SetActive(false);
+        }
     }
 
     [System.Obsolete]
@@ -119,25 +135,33 @@ public class pl1Fight : MonoBehaviour
             pl1Meter -= 50f;
             uppercutCol.SetActive(true);
             upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * .8f, pl1.transform.position.y - .75f, 0f);
+            uppt.transform.position = upperCut.transform.position;
             yield return new WaitForSeconds(.02f);
             uppercutParticals.enableEmission = true;
+            
 
             upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1f, pl1.transform.position.y - .5f, 0f);
+            uppt.transform.position = upperCut.transform.position;
             yield return new WaitForSeconds(.02f);
 
             upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1.1f, pl1.transform.position.y - .25f, 0f);
+            uppt.transform.position = upperCut.transform.position;
             yield return new WaitForSeconds(.02f);          
 
             upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1.3f, pl1.transform.position.y, 0f);
+            uppt.transform.position = upperCut.transform.position;
             yield return new WaitForSeconds(.02f);
 
             upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1.5f, pl1.transform.position.y + .25f, 0f);
+            uppt.transform.position = upperCut.transform.position;
             yield return new WaitForSeconds(.02f);
 
             upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1.7f, pl1.transform.position.y + .5f, 0f);
+            uppt.transform.position = upperCut.transform.position;
             yield return new WaitForSeconds(.02f);
 
             upperCut.position = new Vector3(pl1.transform.position.x + pl1horizontalInput * 1.5f, pl1.transform.position.y + .75f, 0f);
+            uppt.transform.position = upperCut.transform.position;
             yield return new WaitForSeconds(.02f);
 
             uppercutParticals.enableEmission = false;
@@ -446,7 +470,8 @@ public class pl1Fight : MonoBehaviour
             hitStunMultiplier = 1;
             bonusHitstun = 1f;
             StartCoroutine(HitStun());
-            pl1RB.AddForce(pl2Fight.horizontalInput * pl1Perc / 500f, -pl1RB.velocity.y + pl1Perc / 2.5f, 0);
+            pl1RB.AddForce(0, -pl1RB.velocity.y, 0, ForceMode.VelocityChange);
+            pl1RB.AddForce(pl2Fight.horizontalInput * pl1Perc / 500f, 300f + pl1Perc / 2.5f, 0);
             pl1Perc += 50f;
         }
 
@@ -457,7 +482,7 @@ public class pl1Fight : MonoBehaviour
             bonusHitstun = .05f;
             StartCoroutine(HitStun());
             pl1RB.AddForce(0, -pl1RB.velocity.y, 0, ForceMode.VelocityChange);
-            pl1RB.AddForce(pl2Fight.horizontalInput * pl1Perc / 500f, 300f, 0);
+            pl1RB.AddForce(pl2Fight.horizontalInput * pl1Perc / 500f, 200f, 0);
             pl1Perc += 50f;
         }
 

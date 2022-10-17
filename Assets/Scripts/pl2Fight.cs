@@ -26,6 +26,7 @@ public class pl2Fight : MonoBehaviour
     public Transform upperCut2;
     public GameObject uppercutCol2;
     public ParticleSystem uppercutParticles2;
+    public Transform uppt;
 
 
     //gentelmen
@@ -60,6 +61,10 @@ public class pl2Fight : MonoBehaviour
         {
             yield return new WaitForSeconds(.5f);
             pl2Meter += 2;
+            if(Input.GetKey("p"))
+            {
+                pl2Meter += 30;
+            }
         }
 
         meterLock = true;
@@ -79,7 +84,7 @@ public class pl2Fight : MonoBehaviour
             pl2Perc = 5000f;
             pl1Fight.pl1Perc = 5000f;
         }
-        Debug.Log(pl1Gm1HS);
+        //Debug.Log(pl1Gm1HS);
         if (Input.GetButtonDown("Joystick2-1") && hitStun == false)
             
         {
@@ -128,25 +133,32 @@ public class pl2Fight : MonoBehaviour
             pl2Meter -= 50f;
             uppercutCol2.SetActive(true);
             upperCut2.position = new Vector3(pl2.transform.position.x + horizontalInput * .8f, pl2.transform.position.y - .75f, 0f);
+            uppt.transform.position = upperCut2.transform.position;
             yield return new WaitForSeconds(.02f);
             uppercutParticles2.enableEmission = true;
 
             upperCut2.position = new Vector3(pl2.transform.position.x + horizontalInput * 1f, pl2.transform.position.y - .5f, 0f);
+            uppt.transform.position = upperCut2.transform.position;
             yield return new WaitForSeconds(.02f);
 
             upperCut2.position = new Vector3(pl2.transform.position.x + horizontalInput * 1.1f, pl2.transform.position.y - .25f, 0f);
+            uppt.transform.position = upperCut2.transform.position;
             yield return new WaitForSeconds(.02f);
 
             upperCut2.position = new Vector3(pl2.transform.position.x + horizontalInput * 1.3f, pl2.transform.position.y, 0f);
+            uppt.transform.position = upperCut2.transform.position;
             yield return new WaitForSeconds(.02f);
 
             upperCut2.position = new Vector3(pl2.transform.position.x + horizontalInput * 1.5f, pl2.transform.position.y + .25f, 0f);
+            uppt.transform.position = upperCut2.transform.position;
             yield return new WaitForSeconds(.02f);
 
             upperCut2.position = new Vector3(pl2.transform.position.x + horizontalInput * 1.7f, pl2.transform.position.y + .5f, 0f);
+            uppt.transform.position = upperCut2.transform.position;
             yield return new WaitForSeconds(.02f);
 
             upperCut2.position = new Vector3(pl2.transform.position.x + horizontalInput * 1.5f, pl2.transform.position.y + .75f, 0f);
+            uppt.transform.position = upperCut2.transform.position;
             yield return new WaitForSeconds(.02f);
             
             uppercutParticles2.enableEmission = false;
@@ -313,7 +325,8 @@ public class pl2Fight : MonoBehaviour
                 hitStunMultiplier2 = 1;
                 bonusHitstun2 = 1f;
                 StartCoroutine(HitStun());
-                pl2RB.AddForce(pl1Fight.pl1horizontalInput * pl2Perc / 500f, -pl2RB.velocity.y + pl2Perc / 2.5f, 0);
+            pl2RB.AddForce(0, -pl2RB.velocity.y, 0, ForceMode.VelocityChange);
+            pl2RB.AddForce(pl1Fight.pl1horizontalInput * pl2Perc / 300f, 300f + pl2Perc / 2.5f, 0);
                 pl2Perc += 50f;
             
             
@@ -325,7 +338,8 @@ public class pl2Fight : MonoBehaviour
             hitStunMultiplier2 = 0;
             bonusHitstun2 = .05f;
             StartCoroutine(HitStun());
-            pl2RB.AddForce(pl1Fight.pl1horizontalInput * pl2Perc / 500f, -pl2RB.velocity.y + pl2Perc / 2.5f, 0);
+            pl2RB.AddForce(0, -pl2RB.velocity.y, 0, ForceMode.VelocityChange);
+            pl2RB.AddForce(pl1Fight.pl1horizontalInput * pl2Perc / 500f, 200f, 0);
             pl2Perc += 50f;
         }
 
@@ -335,7 +349,8 @@ public class pl2Fight : MonoBehaviour
             hitStunMultiplier2 = .2f;
             bonusHitstun2 = .05f;
             StartCoroutine(HitStun());
-            pl2RB.AddForce(pl1Fight.pl1horizontalInput * pl2Perc / 500f, -pl2RB.velocity.y + -pl2Perc / 5f, 0);
+            pl2RB.AddForce(0, -pl2RB.velocity.y, 0, ForceMode.VelocityChange);
+            pl2RB.AddForce(pl1Fight.pl1horizontalInput * pl2Perc / 500f, -300f, 0);
             pl2Perc += 30f;
         }
 
@@ -345,9 +360,17 @@ public class pl2Fight : MonoBehaviour
             hitStunMultiplier2 = .5f;
             bonusHitstun2 = .1f;
             StartCoroutine(HitStun());
-            pl2RB.AddForce(pl1Fight.pl1horizontalInput * (pl2Perc / 1.25f), -pl2RB.velocity.y + pl2Perc / 5f, 0);
+            pl2RB.AddForce(0, -pl2RB.velocity.y, 0, ForceMode.VelocityChange);
+            pl2RB.AddForce(pl1Fight.pl1horizontalInput * (pl2Perc / 5f) + pl2Fight.horizontalInput * 400f, 50f, 0);
             pl2Perc += 90f;
         }
+
+        if (collision.gameObject.name == "urMom")
+        {
+            Debug.Log("BOOOOOM");
+            pl2RB.AddForce(0, -1000, 0);
+        }
+
     }
 
     IEnumerator HitStun()
