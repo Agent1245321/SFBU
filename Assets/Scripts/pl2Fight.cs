@@ -47,6 +47,9 @@ public class pl2Fight : MonoBehaviour
     public static bool pl1Gm2HS;
     public static bool pl1Gm3HS;
 
+    //spikey
+        public GameObject urMom2;
+
     private void Start()
     {
         StartCoroutine(MeterBurn());
@@ -85,7 +88,7 @@ public class pl2Fight : MonoBehaviour
             pl1Fight.pl1Perc = 5000f;
         }
         //Debug.Log(pl1Gm1HS);
-        if (Input.GetButtonDown("Joystick2-1") && hitStun == false)
+        if (Input.GetButtonDown("Joystick2-1") && hitStun == false && Mathf.Abs(Input.GetAxis("Joystick2Horizontal2")) > .8f)
             
         {
          
@@ -118,11 +121,17 @@ public class pl2Fight : MonoBehaviour
             }
             gstage += 1;
         }
+
+        if (Input.GetButtonDown("Joystick2-1") && hitStun == false && Input.GetAxis("Joystick2Vertical2") < -.8f && pl2Meter >= 75)
+        {
+            Debug.Log("Called");
+            StartCoroutine(Spikey2());
+        }
     }
 
     private void FixedUpdate()
     {
-        // Debug.Log(pl2Meter);
+        
     }
 
     [System.Obsolete]
@@ -318,6 +327,15 @@ public class pl2Fight : MonoBehaviour
         yield return null;
     }
 
+    IEnumerator Spikey2()
+    {
+        pl2Meter -= 75f;
+        urMom2.SetActive(true);
+        yield return new WaitForSeconds(.9f);
+        urMom2.SetActive(false);
+        yield return null;
+    }
+
     public void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.name == "uppercut")
@@ -361,14 +379,18 @@ public class pl2Fight : MonoBehaviour
             bonusHitstun2 = .1f;
             StartCoroutine(HitStun());
             pl2RB.AddForce(0, -pl2RB.velocity.y, 0, ForceMode.VelocityChange);
-            pl2RB.AddForce(pl1Fight.pl1horizontalInput * (pl2Perc / 5f) + pl2Fight.horizontalInput * 400f, 50f, 0);
+            pl2RB.AddForce(pl1Fight.pl1horizontalInput * (pl2Perc / 5f) + pl1Fight.pl1horizontalInput * 400f, 50f, 0);
             pl2Perc += 90f;
         }
 
         if (collision.gameObject.name == "urMom")
         {
-            Debug.Log("BOOOOOM");
-            pl2RB.AddForce(0, -1000, 0);
+            hitStunMultiplier2 = .2f;
+            bonusHitstun2 = .2f;
+            StartCoroutine(HitStun());
+           
+            pl2RB.AddForce(0, -pl2Perc * 5f, 0);
+            pl2Perc += 50f;
         }
 
     }

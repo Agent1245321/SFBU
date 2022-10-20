@@ -62,7 +62,7 @@ public class pl1Fight : MonoBehaviour
             pl1Meter += 2;
             if (Input.GetKey("p"))
             {
-                pl1Meter += 30;
+                pl1Meter += 100;
             }
         }
 
@@ -82,7 +82,7 @@ public class pl1Fight : MonoBehaviour
 
 
 
-        if (Input.GetButtonDown("Joystick1-1") && hitStun == false)
+        if (Input.GetButtonDown("Joystick1-1") && hitStun == false && Mathf.Abs(Input.GetAxis("Joystick1Horizontal2")) > .8f)
         {
             StartCoroutine(UpperCut());
        }
@@ -113,18 +113,17 @@ public class pl1Fight : MonoBehaviour
             }
             gstage += 1;
         }
+
+        if (Input.GetButtonDown("Joystick1-1") && hitStun == false && Input.GetAxis("Joystick1Vertical2") < -.8f && pl1Meter >= 75)
+        {
+            StartCoroutine(Spikey());
+        }
     }
 
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
-        if(Input.GetButton("Joystick1-3"))
-        {
-            urMom.SetActive(true);
-        }
-        else
-        {
-            urMom.SetActive(false);
-        }
+        Debug.Log(Mathf.Abs(Input.GetAxis("Joystick1Horizontal2")));
+        
     }
 
     [System.Obsolete]
@@ -463,6 +462,15 @@ public class pl1Fight : MonoBehaviour
         pl2Gm3HS = false;
         yield return null;
     }
+
+    IEnumerator Spikey()
+    {
+        pl1Meter -= 75f;
+        urMom.SetActive(true);
+        yield return new WaitForSeconds(.9f);
+        urMom.SetActive(false);
+        yield return null;
+    }
     public void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.name == "uppercut2")
@@ -471,7 +479,7 @@ public class pl1Fight : MonoBehaviour
             bonusHitstun = 1f;
             StartCoroutine(HitStun());
             pl1RB.AddForce(0, -pl1RB.velocity.y, 0, ForceMode.VelocityChange);
-            pl1RB.AddForce(pl2Fight.horizontalInput * pl1Perc / 500f, 300f + pl1Perc / 2.5f, 0);
+            pl1RB.AddForce(pl2Fight.horizontalInput * pl1Perc / 300f, 300f + pl1Perc / 2.5f, 0);
             pl1Perc += 50f;
         }
 
@@ -506,6 +514,16 @@ public class pl1Fight : MonoBehaviour
             pl1RB.AddForce(0, -pl1RB.velocity.y, 0, ForceMode.VelocityChange);
             pl1RB.AddForce(pl2Fight.horizontalInput * (pl1Perc / 5f) + pl2Fight.horizontalInput * 400f, 50f, 0);
             pl1Perc += 90f;
+        }
+
+        if (collision.gameObject.name == "urMom2")
+        {
+            hitStunMultiplier = .2f;
+            bonusHitstun = .2f;
+            StartCoroutine(HitStun());
+           
+            pl1RB.AddForce(0, -pl1Perc * 5f, 0);
+            pl1Perc += 50f;
         }
     }
 
