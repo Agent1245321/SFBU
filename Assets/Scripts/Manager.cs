@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Manager : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class Manager : MonoBehaviour
     public GameObject endScreen;
     public TextMeshProUGUI endScreenText;
     public GameObject gameUI;
-    public GameObject menu;
+    
     public float timeset;
     public static bool gameOver;
     public bool testMode;
@@ -35,26 +36,16 @@ public class Manager : MonoBehaviour
     private float pl2Perc;
 
     private float verticalDpad;
-    
 
+
+    private void Awake()
+    {
+        StartCoroutine(GameTimeCountdown());
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        
-        if(testMode == false)
-        {
-            menu.SetActive(true);
-            endScreen.SetActive(false);
-            gameUI.SetActive(false);
-        }
-
-        if(testMode == true)
-        {
-            menu.SetActive(false);
-            endScreen.SetActive(false);
-            gameUI.SetActive(true);
-        }
         // ^ calls to start the timer
     }
 
@@ -104,19 +95,7 @@ public class Manager : MonoBehaviour
      
     }
 
-    public void OnButtonPress()
-    {
-        StartCoroutine(GameTimeCountdown());
-    }
-
-    public void OnButtonPress2()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
-    }
+   
 
     private void LateUpdate()
     {
@@ -138,6 +117,8 @@ public class Manager : MonoBehaviour
     {
         if(testMode == false)
         {
+            pl1Fight.pl1Meter = 0f;
+            pl2Fight.pl2Meter = 0f;
             gameOver = false;
             time = timeset;
             pl1Fight.pl1Perc = 0;
@@ -145,13 +126,14 @@ public class Manager : MonoBehaviour
             score1 = 0;
             score2 = 0;
             gameUI.SetActive(true);
-            menu.SetActive(false);
+            
             endScreen.SetActive(false);
 
             while (time > 0)
             {
                 time -= 1;
                 yield return new WaitForSeconds(1);
+                Debug.Log(testMode);
             }
 
             gameOver = true;
@@ -174,9 +156,8 @@ public class Manager : MonoBehaviour
             yield return new WaitForSeconds(5);
             gameOver = false;
 
-            endScreen.SetActive(false);
-            gameUI.SetActive(false);
-            menu.SetActive(true);
+            SceneManager.LoadScene("Menu");
+            
 
             //ends the routine
             yield return null;

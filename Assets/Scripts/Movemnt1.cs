@@ -15,6 +15,7 @@ public class Movemnt1 : MonoBehaviour
     public float friction;
     public Transform pl1t;
     public static bool isDed = false;
+    public GameObject Explosion;
 
 
     private float jumps = 0;
@@ -64,7 +65,7 @@ public class Movemnt1 : MonoBehaviour
         
             if (isDed == true)
         {
-           
+            
             if (Math.Abs(pl1t.transform.position.x) > .3f)
             {
                 pl1.velocity = new Vector3(0, 0, 0);
@@ -77,6 +78,7 @@ public class Movemnt1 : MonoBehaviour
                 pl1.velocity = new Vector3(0, -50f, 0);
                 pl1t.transform.position = new Vector3(0f, 16f, 0f);
                 isDed = false;
+                Explosion.SetActive(false);
             }
         }
 
@@ -168,6 +170,7 @@ public class Movemnt1 : MonoBehaviour
         {
             if (isDed == false)
             {
+                Explosion.SetActive(true);
                 pl1.velocity = new Vector3(0, 0, 0);
                 jumps = 0;
                 pl1.AddForce(-currentSpeed, -currentVertical, 0, ForceMode.VelocityChange);
