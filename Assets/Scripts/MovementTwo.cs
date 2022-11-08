@@ -14,6 +14,7 @@ public class MovementTwo : MonoBehaviour
     public float friction;
     public Transform pl2t;
     public static bool isDed = false;
+    public GameObject pl2GO;
 
     private float jumps2 = 0;
     //private bool isGrounded2 = false;
@@ -149,7 +150,16 @@ public class MovementTwo : MonoBehaviour
             //pl2.angularVelocity = new Vector3(0, 10, currentRotZ);
         }
 
+        if (controllerVertical < -.8f)
+        {
+            pl2GO.transform.localScale = new Vector3(1, 1, 1);
+            pl2.AddForce(0, -1, 0, ForceMode.VelocityChange);
+        }
+        else
+        {
+            pl2GO.transform.localScale = new Vector3(1, 2, 1);
 
+        }
 
 
     }

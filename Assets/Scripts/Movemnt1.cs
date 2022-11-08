@@ -7,6 +7,7 @@ using System;
 public class Movemnt1 : MonoBehaviour
 {
     public Rigidbody pl1;
+    public GameObject pl1GO;
     public BoxCollider pl1Col;
     public BoxCollider stage;
     public float setSpeed;
@@ -16,6 +17,7 @@ public class Movemnt1 : MonoBehaviour
     public Transform pl1t;
     public static bool isDed = false;
     public GameObject Explosion;
+    public ParticleSystem explosionPart;
 
 
     private float jumps = 0;
@@ -33,6 +35,7 @@ public class Movemnt1 : MonoBehaviour
     private float currentRotY;
     private bool gameOver;
     private bool hitStun;
+    private Vector3 colTransform;
     
 
  
@@ -49,8 +52,8 @@ public class Movemnt1 : MonoBehaviour
         controllerInput = Input.GetAxis("Horizontal");
         controllerVertical = Input.GetAxis("Vertical");
         controllerHorizontal2 = Input.GetAxis("Joystick1Horizontal2");
-        currentRotY = (pl1.angularVelocity.y);
-        currentRotZ = (pl1.angularVelocity.z);
+        currentRotY = pl1.angularVelocity.y;
+        currentRotZ = pl1.angularVelocity.z;
 
         currentSpeed = pl1.velocity.x;
         currentVertical = pl1.velocity.y;
@@ -78,7 +81,7 @@ public class Movemnt1 : MonoBehaviour
                 pl1.velocity = new Vector3(0, -50f, 0);
                 pl1t.transform.position = new Vector3(0f, 16f, 0f);
                 isDed = false;
-                Explosion.SetActive(false);
+                explosionPart.Stop();
             }
         }
 
@@ -95,6 +98,17 @@ public class Movemnt1 : MonoBehaviour
         if (controllerVertical < .8f)
         {
             canJump = true;
+        }
+
+        if (controllerVertical < -.8f)
+        {
+            pl1GO.transform.localScale = new Vector3(1, 1, 1);
+            pl1.AddForce(0, -1, 0, ForceMode.VelocityChange);
+        }
+        else
+        {
+            pl1GO.transform.localScale = new Vector3(1, 2, 1);
+            
         }
 
 
@@ -155,27 +169,33 @@ public class Movemnt1 : MonoBehaviour
 
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "BlastZone")
+        {
+            if (isDed == false)
+            {
+                colTransform = collision.GetContact(0).point;
+                Explosion.transform.position = colTransform;
+                explosionPart.Play();
+                pl1.velocity = new Vector3(0, 0, 0);
+                jumps = 0;
+                pl1.AddForce(-currentSpeed, -currentVertical, 0, ForceMode.VelocityChange);
+                isDed = true;
+
+                
+            }
+        }
+    }
     void OnTriggerEnter(Collider collision)
     {
-        if(collision.gameObject.tag == "Stage")
+        if (collision.gameObject.tag == "Stage")
         {
             isDed = false;
             speed = setSpeed;
             jumps = 2;
             pl1.rotation = Quaternion.Euler(0, 0, 0);
-            
-        }
 
-        if(collision.gameObject.tag == "BlastZone")
-        {
-            if (isDed == false)
-            {
-                Explosion.SetActive(true);
-                pl1.velocity = new Vector3(0, 0, 0);
-                jumps = 0;
-                pl1.AddForce(-currentSpeed, -currentVertical, 0, ForceMode.VelocityChange);
-                isDed = true;
-            }
         }
     }
 
