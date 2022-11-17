@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MenuScript : MonoBehaviour
 {
+    public GameObject Settings;
+
     public void OnButtonPress()
     {
         SceneManager.LoadScene("Main Arena");
@@ -17,5 +19,14 @@ public class MenuScript : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+    public void OnButtonPress3()
+    {
+        Settings.SetActive(true);
+    }
+
+    public void OnButtonPress4()
+    {
+        Settings.SetActive(false);
     }
 }

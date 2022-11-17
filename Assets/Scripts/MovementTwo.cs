@@ -20,8 +20,8 @@ public class MovementTwo : MonoBehaviour
     //private bool isGrounded2 = false;
     private float currentspeed2;
     private float currentVertical2;
-    private float controllerInput;
-    private float controllerVertical;
+
+    
     private bool jump;
     private bool canJump;
     private float speed2;
@@ -31,6 +31,16 @@ public class MovementTwo : MonoBehaviour
     private bool hitStun;
 
     private float controllerHorizontal2;
+
+
+
+    //Controller Managment
+
+    private float pl1InputHorizontal;
+    private float pl1InputVertical;
+    private float pl1InputLLaunch;
+    private float pl1InputRLaunch;
+    
     void Update()
     {
         hitStun = pl2Fight.hitStun;
@@ -42,8 +52,8 @@ public class MovementTwo : MonoBehaviour
 
 
 
-        controllerInput = Input.GetAxis("HorizontalController");
-        controllerVertical = Input.GetAxis("VerticalController");
+        pl1InputHorizontal = Input.GetAxis("HorizontalController");
+        pl1InputVertical = Input.GetAxis("VerticalController");
         controllerHorizontal2 = Input.GetAxis("Joystick2Horizontal2");
 
         currentspeed2 = pl2.velocity.x;
@@ -79,7 +89,7 @@ public class MovementTwo : MonoBehaviour
 
 
         //check for vertical stick input
-        if (controllerVertical > .8f && hitStun == false)
+        if (pl1InputVertical > .8f && hitStun == false)
         {
             jump = true;
         }
@@ -88,7 +98,7 @@ public class MovementTwo : MonoBehaviour
             jump = false;
         }
         //checks if stick was released and allows you to jump
-        if (controllerVertical < .8f )
+        if (pl1InputVertical < .8f )
         {
             canJump = true;
         }
@@ -101,12 +111,12 @@ public class MovementTwo : MonoBehaviour
         
 
         //movement on the horizontal.
-        if (controllerInput < -.5 && currentspeed2 >= -speedCap2 && hitStun == false)
+        if (pl1InputHorizontal < -.5 && currentspeed2 >= -speedCap2 && hitStun == false)
         {
             pl2.AddForce(-speed2 * .1f, 0, 0, ForceMode.VelocityChange);
         }
 
-        if (controllerInput > .5 && currentspeed2 <= speedCap2 && hitStun == false)
+        if (pl1InputHorizontal > .5 && currentspeed2 <= speedCap2 && hitStun == false)
         {
             pl2.AddForce(speed2 * .1f, 0, 0, ForceMode.VelocityChange);
         }
@@ -150,7 +160,7 @@ public class MovementTwo : MonoBehaviour
             //pl2.angularVelocity = new Vector3(0, 10, currentRotZ);
         }
 
-        if (controllerVertical < -.8f)
+        if (pl1InputVertical < -.8f)
         {
             pl2GO.transform.localScale = new Vector3(1, 1, 1);
             pl2.AddForce(0, -1, 0, ForceMode.VelocityChange);
@@ -200,7 +210,7 @@ public class MovementTwo : MonoBehaviour
 
     void OnTriggerStay(Collider collision)
     {
-        if (controllerInput == 0)
+        if (pl1InputHorizontal == 0)
         {
             pl2.AddForce(-currentspeed2 * friction, 0f, 0f, ForceMode.VelocityChange);
         }

@@ -26,8 +26,7 @@ public class Movemnt1 : MonoBehaviour
     private float currentVertical;
     private float speed;
     
-    private float controllerInput;
-    private float controllerVertical;
+    
     private float controllerHorizontal2;
     private bool jump;
     private bool canJump;
@@ -36,9 +35,14 @@ public class Movemnt1 : MonoBehaviour
     private bool gameOver;
     private bool hitStun;
     private Vector3 colTransform;
-    
 
- 
+
+    //Controller Managment
+
+    private float pl1InputHorizontal;
+    private float pl1InputVertical;
+    private float pl1InputLLaunch;
+    private float pl1InputRLaunch;
     void Update()
     {
         hitStun = pl1Fight.hitStun;
@@ -49,8 +53,8 @@ public class Movemnt1 : MonoBehaviour
             
         }
        
-        controllerInput = Input.GetAxis("Horizontal");
-        controllerVertical = Input.GetAxis("Vertical");
+        pl1InputHorizontal = Input.GetAxis("Horizontal");
+        pl1InputVertical = Input.GetAxis("Vertical");
         controllerHorizontal2 = Input.GetAxis("Joystick1Horizontal2");
         currentRotY = pl1.angularVelocity.y;
         currentRotZ = pl1.angularVelocity.z;
@@ -86,7 +90,7 @@ public class Movemnt1 : MonoBehaviour
         }
 
         //check for vertical stick input
-        if (controllerVertical > .8f && hitStun == false)
+        if (pl1InputVertical > .8f && hitStun == false)
         {
             jump = true;
         }
@@ -95,12 +99,12 @@ public class Movemnt1 : MonoBehaviour
             jump = false;
         }
         //checks if stick was released and allows you to jump
-        if (controllerVertical < .8f)
+        if (pl1InputVertical < .8f)
         {
             canJump = true;
         }
 
-        if (controllerVertical < -.8f)
+        if (pl1InputVertical < -.8f)
         {
             pl1GO.transform.localScale = new Vector3(1, 1, 1);
             pl1.AddForce(0, -1, 0, ForceMode.VelocityChange);
@@ -113,12 +117,12 @@ public class Movemnt1 : MonoBehaviour
 
 
         //Movement !
-        if (controllerInput < -.5 && currentSpeed >= -speedCap && hitStun == false)
+        if (pl1InputHorizontal < -.5 && currentSpeed >= -speedCap && hitStun == false)
         {
             pl1.AddForce(-speed * .1f, 0, 0, ForceMode.VelocityChange);
         }
 
-        if (controllerInput > .5 && currentSpeed <= speedCap && hitStun == false)
+        if (pl1InputHorizontal > .5 && currentSpeed <= speedCap && hitStun == false)
         {
             pl1.AddForce(speed * .1f, 0, 0, ForceMode.VelocityChange);
         }
@@ -129,7 +133,7 @@ public class Movemnt1 : MonoBehaviour
             pl1.AddForce(0, -currentVertical + jumpHeight, 0, ForceMode.VelocityChange);
             jumps = jumps - 1;
             // isGrounded = false;
-            //Debug.Log("Jump");
+            
         }
 
 
@@ -154,8 +158,7 @@ public class Movemnt1 : MonoBehaviour
         }
 
 
-        // Debug.Log(jumps);
-        //Debug.Log(controllerHorizontal2);
+        
         if (controllerHorizontal2 > .8f)
         {
             //pl1.angularVelocity = new Vector3(0, -10, currentRotZ);

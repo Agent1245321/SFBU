@@ -122,7 +122,7 @@ public class pl1Fight : MonoBehaviour
 
     public void FixedUpdate()
     {
-        Debug.Log(Mathf.Abs(Input.GetAxis("Joystick1Horizontal2")));
+        
         
     }
 

@@ -133,7 +133,7 @@ public class Manager : MonoBehaviour
             {
                 time -= 1;
                 yield return new WaitForSeconds(1);
-                Debug.Log(testMode);
+                
             }
 
             gameOver = true;
