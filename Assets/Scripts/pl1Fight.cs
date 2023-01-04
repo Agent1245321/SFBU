@@ -15,6 +15,7 @@ public class pl1Fight : MonoBehaviour
     public Rigidbody pl1RB;
     public static float pl1horizontalInput;
     private bool meterLock;
+    private bool pl1controller;
     
     public Material red;
     public Material lred;
@@ -82,8 +83,9 @@ public class pl1Fight : MonoBehaviour
 
 
 
-        if (Input.GetButtonDown("Joystick1-1") && hitStun == false && Mathf.Abs(Input.GetAxis("Joystick1Horizontal2")) > .8f)
+        if ((Input.GetButtonDown("Joystick1-1") || Input.GetKeyDown(ControllerManagers.pl1KeySpecial) ) && hitStun == false && Mathf.Abs(Input.GetAxis("Joystick1Horizontal2")) > .8f)
         {
+            Debug.Log("AHAHAHAHA");
             StartCoroutine(UpperCut());
        }
         if (pl1Meter < 100 && meterLock == true)
@@ -92,18 +94,26 @@ public class pl1Fight : MonoBehaviour
             StartCoroutine(MeterBurn());
         }
 
-        if(Input.GetAxis("Joystick1Horizontal2") > .8f)
+
+        if (pl1controller == true)
         {
-            pl1horizontalInput = 1;
+            if (Input.GetAxis("Joystick1Horizontal2") > .8f && pl1controller == true)
+            {
+                pl1horizontalInput = 1;
+            }
+
+            if (Input.GetAxis("Joystick1Horizontal2") < -0.8f)
+            {
+                pl1horizontalInput = -1;
+
+            }
+        }
+        else
+        {
+            pl1horizontalInput = ControllerManagers.pl1Axis2;
         }
 
-        if (Input.GetAxis("Joystick1Horizontal2") < -0.8f)
-        {
-            pl1horizontalInput = -1;
-
-        }
-
-        if (Input.GetButtonDown("Joystick1-0") && hitStun == false)
+        if ((Input.GetButtonDown("Joystick1-0") || Input.GetKeyDown(ControllerManagers.pl1KeyJab))&& hitStun == false)
         {
 
 

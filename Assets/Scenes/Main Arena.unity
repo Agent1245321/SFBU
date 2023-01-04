@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.055012263, g: 0.02234729, b: 0.06604564, a: 1}
+  m_IndirectSpecularColor: {r: 0.054942578, g: 0.022317022, b: 0.06599013, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5746,6 +5746,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 496168084}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &502092059
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c1d34c4936a14614584c2e39f4f346d7, type: 3}
+  m_PrefabInstance: {fileID: 1590726675}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1590726676}
+  m_Layer: 0
+  m_Name: 'SFBU (Missing Prefab with guid: c1d34c4936a14614584c2e39f4f346d7)'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &556399380
 GameObject:
   m_ObjectHideFlags: 0
@@ -22321,6 +22337,7 @@ MonoBehaviour:
   pl1t: {fileID: 1397307108}
   Explosion: {fileID: 1898404725}
   explosionPart: {fileID: 1898404728}
+  pl1controller: 0
 --- !u!65 &1397307110
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22445,50 +22462,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1475234032}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1543880451
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1543880453}
-  - component: {fileID: 1543880452}
-  m_Layer: 0
-  m_Name: ControllerManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1543880452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1543880451}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed0f570981f0a0442ab9e0fe9947b1b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controllerNum: 2
---- !u!4 &1543880453
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1543880451}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.970278, y: -9.329135, z: 61.00607}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 18
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1590726675
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22566,11 +22539,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1d34c4936a14614584c2e39f4f346d7, type: 3}
---- !u!4 &1590726676 stripped
+--- !u!4 &1590726676
 Transform:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c1d34c4936a14614584c2e39f4f346d7, type: 3}
   m_PrefabInstance: {fileID: 1590726675}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502092059}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 125002786}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1593181166
 GameObject:
   m_ObjectHideFlags: 0

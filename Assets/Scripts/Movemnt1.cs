@@ -34,6 +34,7 @@ public class Movemnt1 : MonoBehaviour
     private float currentRotY;
     private bool gameOver;
     private bool hitStun;
+    public bool pl1controller;
     private Vector3 colTransform;
 
 
@@ -52,10 +53,20 @@ public class Movemnt1 : MonoBehaviour
             pl1.constraints = RigidbodyConstraints.FreezeAll;
             
         }
-       
-        pl1InputHorizontal = Input.GetAxis("Horizontal");
-        pl1InputVertical = Input.GetAxis("Vertical");
-        controllerHorizontal2 = Input.GetAxis("Joystick1Horizontal2");
+       if(pl1controller == true)
+        {
+            pl1InputHorizontal = Input.GetAxis("Horizontal");
+            pl1InputVertical = Input.GetAxis("Vertical");
+            controllerHorizontal2 = Input.GetAxis("Joystick1Horizontal2");
+        }
+       else
+        {
+            Debug.Log(ControllerManagers.pl1Axis2);
+            pl1InputHorizontal = ControllerManagers.pl1Axis2;
+            pl1InputVertical = ControllerManagers.pl1Axis1;
+        }
+        
+        
         currentRotY = pl1.angularVelocity.y;
         currentRotZ = pl1.angularVelocity.z;
 
@@ -136,8 +147,8 @@ public class Movemnt1 : MonoBehaviour
             
         }
 
-
-        if (Input.GetButtonDown("Joystick5") && jumps > 0 && hitStun == false)
+       
+        if ((Input.GetButtonDown("Joystick5") || Input.GetKeyDown(ControllerManagers.pl1KeyLLaunch)) && jumps > 0 && hitStun == false)
         {
             pl1.angularVelocity = new Vector3(0, currentRotY , -6);
             pl1.AddForce(-currentSpeed + (setSpeed * 5f), (-currentVertical + (jumpHeight *.75f)), 0, ForceMode.VelocityChange);
@@ -147,7 +158,7 @@ public class Movemnt1 : MonoBehaviour
 
         }
 
-        if (Input.GetButtonDown("Joystick4") && jumps > 0 && hitStun == false)
+        if ((Input.GetButtonDown("Joystick4") || Input.GetKeyDown(ControllerManagers.pl1KeyRLaunch)) && jumps > 0 && hitStun == false)
         {
             pl1.angularVelocity = new Vector3(0, currentRotY, 6);
             pl1.AddForce(-currentSpeed + (-setSpeed * 5f), (-currentVertical + (jumpHeight * .75f)), 0, ForceMode.VelocityChange);

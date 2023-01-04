@@ -1,20 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class ControllerManagers : MonoBehaviour
 {
     // Start is called before the first frame update
     
     
-    private string pl1KeyJab;
-    private string pl1KeySpecial;
-    private string pl1KeyLLaunch;
-    private string pl1KeyRLaunch;
+    public static string pl1KeyJab;
+    public static string pl1KeySpecial;
+    public static string pl1KeyLLaunch;
+    public static string pl1KeyRLaunch;
     private string pl1KeyUp;
     private string pl1KeyDown;
     private string pl1KeyLeft;
     private string pl1KeyRight;
+    public static GameObject managingOB;
 
     
 
@@ -34,24 +37,44 @@ public class ControllerManagers : MonoBehaviour
 
 
 
-    private void Start()
+    public void Start()
     {
-        pl1KeyUp = "w";
-        pl1KeyDown = "s";
-        pl1KeyLeft = "a";
-        pl1KeyRight = "d";
+        
+        Debug.Log("HAPPEND");
+        if(SceneManager.GetActiveScene().buildIndex == 0)
+                {
+            pl1KeyUp = ("w");
+            pl1KeyDown = ("s");
+            pl1KeyLeft = ("a");
+            pl1KeyRight = ("d");
+            pl1KeyJab = ("o");
+            pl1KeySpecial = ("p");
+            pl1KeyLLaunch = ("q");
+            pl1KeyRLaunch = ("e");
+        }
+
+            
+    }
+
+    private void Awake()
+    {
+        
+        DontDestroyOnLoad(this.gameObject);
+        Debug.Log("AWAKED");
     }
     private void Update()
     {
-        Debug.Log(pl1KeyRight);
+        //Debug.Log(pl1KeyRight);
         if(Input.GetKey(pl1KeyUp)) { pl1Axis1 = 1f; }
-        if(Input.GetKey(pl1KeyDown)) { pl1Axis1 = -1f; }
+        
+        if (Input.GetKey(pl1KeyDown)) { pl1Axis1 = -1f; }
         if(Input.GetKey(pl1KeyRight)) { pl1Axis2 = 1f; }
         if(Input.GetKey(pl1KeyLeft)) { pl1Axis2 = -1f; }
         if(!Input.GetKey(pl1KeyUp) && !Input.GetKey(pl1KeyDown)) { pl1Axis1 = 0f; }
         if(!Input.GetKey(pl1KeyLeft) && !Input.GetKey(pl1KeyRight)) { pl1Axis2 = 0f; }
-        if (Input.GetKey(pl1KeyUp)) { pl1Axis1 = 1f; }
-        Debug.Log(pl1Axis2);
+        if (Input.GetKey(pl1KeySpecial)) { Debug.Log("AHAHAHAH"); }
+
+        //Debug.Log(pl1Axis2);
     }
 
     public void OnButtonPress1() { tempKey = 1; StartCoroutine(ButtonSelect()); }
